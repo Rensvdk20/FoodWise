@@ -14,8 +14,8 @@ namespace Domain
         public string Name { get; set; }
         [Required]
         public int EmployeeNumber { get; set; }
-        public int CanteenId { get; set; }
         [Required]
+        public int CanteenId { get; set; }
         public Canteen? Canteen { get; set; }
     }
 }

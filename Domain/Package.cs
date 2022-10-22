@@ -20,10 +20,10 @@ namespace Domain
         [Required(ErrorMessage = "Selecteer een stad")]
         public ICollection<Product> Products { get; set; }
         //public int City { get; set; }
-        [Required(ErrorMessage = "Selecteer een kantine")]
+        [Required]
         public int CanteenId { get; set; }
         public Canteen? Canteen { get; set; }
-        public DateTime? PickupTime { get; set; }
+        public DateTime PickupTime { get; set; }
         [Required(ErrorMessage = "Kies een datum")]
         public DateTime AvailableTill { get; set; }
         [Required]
@@ -34,6 +34,5 @@ namespace Domain
         [Required(ErrorMessage = "Kies een categorie")]
         public int Category { get; set; }
         public Student? ReservedBy { get; set; }
-
     }
 }
