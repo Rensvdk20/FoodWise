@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class City
+    //public class City
+    //{
+    //    public int Id { get; set; }
+    //    [Required, MaxLength(50)]
+    //    public string Name { get; set; }
+    //    public List<Canteen>? Canteen { get; set; }
+    //}
+
+    public enum City
     {
-        public int Id { get; set; }
-        [Required, MaxLength(50)]
-        public string Name { get; set; }
-        public List<Canteen>? Canteen { get; set; }
+        Breda,
+        [Display(Name = "Den Bosch")]
+        DenBosch,
+        Tilburg
     }
 }

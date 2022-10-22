@@ -18,10 +18,11 @@ namespace Domain
         [MaxLength(255), StringLength(255, ErrorMessage = "Pakket beschrijving mag niet langer zijn dan 255 characters")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Selecteer een stad")]
-        public List<Product> Products { get; set; }
-        public City City { get; set; }
+        public ICollection<Product> Products { get; set; }
+        //public int City { get; set; }
         [Required(ErrorMessage = "Selecteer een kantine")]
-        public Canteen Canteen { get; set; }
+        public int CanteenId { get; set; }
+        public Canteen? Canteen { get; set; }
         public DateTime? PickupTime { get; set; }
         [Required(ErrorMessage = "Kies een datum")]
         public DateTime AvailableTill { get; set; }
@@ -29,7 +30,10 @@ namespace Domain
         public bool EighteenPlus { get; set; }
         [Required(ErrorMessage = "Vul een prijs in")]
         [Column(TypeName = "smallmoney")]
-        public decimal price { get; set; }
+        public decimal Price { get; set; }
+        [Required(ErrorMessage = "Kies een categorie")]
+        public int Category { get; set; }
+        public Student? ReservedBy { get; set; }
 
     }
 }

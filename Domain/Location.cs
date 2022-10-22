@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public enum Categories
+    public enum Location
     {
-        Brood,
-        Fruit,
-        Drank,
-        Vegan
+        La,
+        Ld,
+        Ha
     }
 }

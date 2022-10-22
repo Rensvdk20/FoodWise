@@ -12,9 +12,10 @@ namespace Domain
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        //public int PackageId { get; set; }
+        public ICollection<Package> Packages { get; set; }
         [Required]
         public bool containsAlcohol { get; set; }
-        [Required]
-        public byte[] Picture { get; set; }
+        public byte[]? Picture { get; set; }
     }
 }
