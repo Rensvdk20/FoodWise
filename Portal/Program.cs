@@ -1,7 +1,22 @@
+using DomainServices.Repos;
+using Infrastructure.EF;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IStudentRepo, StudentEFRepo>();
+builder.Services.AddScoped<IPackageRepo, PackageRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
+builder.Services.AddScoped<ICanteenRepo, CanteenRepo>();
+builder.Services.AddScoped<ICanteenEmployeeRepo, CanteenEmployeeRepo>();
+
+builder.Services.AddDbContext<FoodWiseDbContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration["ConnectionStrings:EFConnection"]);
+});
 
 var app = builder.Build();
 

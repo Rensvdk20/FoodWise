@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Products";
+}
+
+@using Domain
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Domain.Package>
+
+<div class="package-header">
+    <h1>Pakketten</h1>
+    <div class="row">
+        <div class="col-6">
+            <span id="package-counter">@Model.Count() pakketten gevonden</span>
+        </div>
+        <div class="col-6 package-header-search">
+            <select id="searchCategory" onchange="getPackages()" asp-items="Html.GetEnumSelectList<Category>()">
+                <option value="-1">Alle categorieën</option>
+            </select>
+            <select id="searchLocation" onchange="getPackages()" asp-items="Html.GetEnumSelectList<Location>()">
+                <option value="-1">Alle locaties</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="packages" id="packages">
+    <div class="row">
+        @foreach (var package in @Model)
+        {
+            //Check if pickup and available till is at the same date (not time)
+            string date = date = @package.PickupTime.ToString("d/M/yyyy HH:mm") + " - " + @package.AvailableTill.ToString("d/M/yyyy HH:mm");
+            if (package.PickupTime.Year == package.AvailableTill.Year && package.PickupTime.Month == package.AvailableTill.Month && package.PickupTime.Day == package.AvailableTill.Day)
+            {
+                date = @package.PickupTime.ToString("d/M/yyyy HH:mm") + " - " + @package.AvailableTill.ToString("HH:mm");
+            }
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="package">
+                    <div class="package-img">
+                        <img src="~/img/openBox.png">
+                    </div>
+                    <div class="package-content">
+                        <h5>@package.Name</h5>
+                        <span class="package-content-date">@date</span><br />
+                        <span class="package-content-type">@Enum.GetName(typeof(Category), @package.Category)</span>
+                        <p class="package-content-price">€@Math.Round(@package.Price, 2)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    main {
+        min-height: 70vh;
+    }
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    //Get the packages with an ajax call
+    function getPackages() {
+        $.ajax({
+            url: '@Url.Action("FilterPackages", "Package")',
+            datatype: 'html',
+            method: 'GET',
+            data: { searchLocation: $("#searchLocation").val(), searchCategory: $("#searchCategory").val() },
+            success: function(res) {
+                //Put the new package data into the package div
+                $('#packages').html(res);
+                //Count the new items
+                let count = 0;
+                $(".package").each(function (res) {
+                    count++;
+                });
+                //Change count text based on the amount
+                if(count != 1) {
+                    $("#package-counter").html(count + " Pakketten gevonden");
+                } else {
+                    $("#package-counter").html(count + " Pakket gevonden");
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+
+</script>
