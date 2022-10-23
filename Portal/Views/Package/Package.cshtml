@@ -1,0 +1,41 @@
+﻿@using Domain
+@using System.Collections
+@model Package
+
+@{
+    Package package = @Model;
+    ViewData["Title"] = @package.Name;
+}
+
+<div class="package-header">
+    <div class="row">
+        <div class="col-lg-6 col-md-12 header-item order-lg-1 order-sm-2 order-2">
+            <h1>@package.Name</h1>
+            <p>
+                @package.Description
+            </p>
+            <button type="button" class="btn btn-primary">Reserveer</button>
+        </div>
+        <div class="col-lg-6 col-md-12 header-item order-lg-2 d-flex justify-content-center order-sm-1 order-1">
+            <img style="width:60%" src="~/img/openBox.png">
+        </div>
+    </div>
+</div>
+<div class="possible-products">
+    <h1>Mogelijke producten</h1>
+    <div class="row">
+        @foreach (var product in package.Products)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="product @(product.containsAlcohol ? "eighteen-plus" : "")">
+                    <div class="product-img">
+                        <img src="~/img/openBox.png">
+                    </div>
+                    <div class="product-content">
+                        <h5>@product.Name</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

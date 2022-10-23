@@ -1,5 +1,6 @@
 using DomainServices.Repos;
 using Infrastructure.EF;
+using Infrastructure.IF;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,11 @@ builder.Services.AddScoped<ICanteenEmployeeRepo, CanteenEmployeeRepo>();
 builder.Services.AddDbContext<FoodWiseDbContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:EFConnection"]);
+});
+
+builder.Services.AddDbContext<FoodWiseIdentityDbContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration["ConnectionStrings:IFConnection"]);
 });
 
 var app = builder.Build();
@@ -38,5 +44,16 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "Responses",
+//    pattern: "/Package}/{id?}",
+//    defaults: new { controller = "Package", action = "Package" });
+
+app.MapControllerRoute(
+    name: "Package",
+    pattern: "Package{id}",
+    defaults: new { Controller = "Package", action = "Package" }
+);
 
 app.Run();

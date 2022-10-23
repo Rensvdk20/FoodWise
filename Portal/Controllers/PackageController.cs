@@ -22,6 +22,8 @@ public class PackageController : Controller
         return View("Packages", packages);
     }
 
+    //Filter the packages
+    // -1 is the filter "all"
     public PartialViewResult FilterPackages(int searchLocation = -1, int searchCategory = -1)
     {
         IQueryable<Package> packages = _packageRepo.GetAllPackages();
@@ -36,7 +38,12 @@ public class PackageController : Controller
             return PartialView("_PackagesPartial", packages.Where(p => p.Category == searchCategory).Where(p => p.Canteen.Location == searchLocation).ToList());
         }
         
-        return PartialView("_PackagesPartial", packages);
-        
+        return PartialView("_PackagesPartial", packages.ToList());
+    }
+
+    public ViewResult Package(int id)
+    {
+        Package package = _packageRepo.GetPackageById(id);
+        return View(package);
     }
 }

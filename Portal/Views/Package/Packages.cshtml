@@ -4,15 +4,15 @@
 
 @using Domain
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<Domain.Package>
+@model IEnumerable<Package>
 
-<div class="package-header">
+<div class="packages-header">
     <h1>Pakketten</h1>
     <div class="row">
         <div class="col-6">
             <span id="package-counter">@Model.Count() pakketten gevonden</span>
         </div>
-        <div class="col-6 package-header-search">
+        <div class="col-6 packages-header-search">
             <select id="searchCategory" onchange="getPackages()" asp-items="Html.GetEnumSelectList<Category>()">
                 <option value="-1">Alle categorieën</option>
             </select>
@@ -34,17 +34,19 @@
             }
 
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="package">
+                <a asp-controller="Package" asp-action="Package" asp-route-id="@package.Id">
+                    <div class="package @(package.EighteenPlus ? "eighteen-plus" : "")">
                     <div class="package-img">
                         <img src="~/img/openBox.png">
                     </div>
                     <div class="package-content">
                         <h5>@package.Name</h5>
-                        <span class="package-content-date">@date</span><br />
+                        <span class="package-content-date">@date</span><br/>
                         <span class="package-content-type">@Enum.GetName(typeof(Category), @package.Category)</span>
                         <p class="package-content-price">€@Math.Round(@package.Price, 2)</p>
                     </div>
                 </div>
+                </a>
             </div>
         }
     </div>
