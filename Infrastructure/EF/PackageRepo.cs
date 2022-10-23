@@ -20,12 +20,12 @@ namespace Infrastructure.EF
 
         public IQueryable<Package> GetAllPackages()
         {
-            return _context.Packages.Include(c => c.Canteen);
+            return _context.Packages.Include(c => c.Canteen).Include(p => p.Products);
         }
 
         public Package GetPackageById(int id)
         {
-            return _context.Packages.SingleOrDefault(package => package.Id == id)!;
+            return _context.Packages.Include(p => p.Products).SingleOrDefault(package => package.Id == id)!;
         }
 
         public async Task AddPackage(Package newPackage)

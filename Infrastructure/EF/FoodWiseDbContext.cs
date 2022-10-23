@@ -18,7 +18,7 @@ namespace Infrastructure.EF
         public DbSet<Canteen> Canteens { get; set; }
         public DbSet<CanteenEmployee> CanteenEmployees { get; set; }
 
-        public FoodWiseDbContext(DbContextOptions contextOptions) : base(contextOptions)
+        public FoodWiseDbContext(DbContextOptions<FoodWiseDbContext> contextOptions) : base(contextOptions)
         {
 
         }
@@ -102,7 +102,7 @@ namespace Infrastructure.EF
                     PickupTime = new DateTime(2022, 11, 16, 13, 15, 00),
                     AvailableTill = new DateTime(2022, 11, 16, 17, 15, 00),
                     EighteenPlus = false,
-                    Price = Decimal.Parse("4,50"),
+                    Price = decimal.Parse("4,50"),
                     Category = (int) Category.Fruit,
                     ReservedBy = null
                 },
@@ -116,7 +116,7 @@ namespace Infrastructure.EF
                     PickupTime = new DateTime(2022, 11, 18, 14, 15, 00),
                     AvailableTill = new DateTime(2022, 11, 18, 16, 15, 00),
                     EighteenPlus = true,
-                    Price = Decimal.Parse("6,50"),
+                    Price = decimal.Parse("6,50"),
                     Category = (int) Category.Fruit,
                     ReservedBy = null
                 }
