@@ -17,14 +17,15 @@ namespace Domain
         [Required(ErrorMessage = "Vul een beschrijving in")]
         [MaxLength(255), StringLength(255, ErrorMessage = "Pakket beschrijving mag niet langer zijn dan 255 characters")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Selecteer een stad")]
         public ICollection<Product> Products { get; set; }
-        //public int City { get; set; }
         [Required]
-        public int CanteenId { get; set; }
+        public int? CanteenId { get; set; }
         public Canteen? Canteen { get; set; }
+        [Required(ErrorMessage = "Kies een ophaal datum")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime PickupTime { get; set; }
-        [Required(ErrorMessage = "Kies een datum")]
+        [Required(ErrorMessage = "Kies een beschikbaar tot datum")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime AvailableTill { get; set; }
         [Required]
         public bool EighteenPlus { get; set; }
@@ -33,6 +34,7 @@ namespace Domain
         public decimal Price { get; set; }
         [Required(ErrorMessage = "Kies een categorie")]
         public int Category { get; set; }
-        public Student? ReservedBy { get; set; }
+        public int? ReservedByStudentId { get; set; }
+        public Student? ReservedByStudent { get; set; }
     }
 }
