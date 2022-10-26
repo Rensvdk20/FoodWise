@@ -104,7 +104,7 @@ namespace Infrastructure.EF
                     EighteenPlus = false,
                     Price = decimal.Parse("4,50"),
                     Category = (int) Category.Fruit,
-                    ReservedBy = null
+                    ReservedByStudentId = null
                 },
                 new Package()
                 {
@@ -118,7 +118,21 @@ namespace Infrastructure.EF
                     EighteenPlus = true,
                     Price = decimal.Parse("6,50"),
                     Category = (int) Category.Fruit,
-                    ReservedBy = null
+                    ReservedByStudentId = null
+                },
+                new Package()
+                {
+                    Id = 3,
+                    Name = "Soep pakket",
+                    Description = "Verschillende soorten soep in een compact pakket",
+                    Products = new List<Product>(),
+                    CanteenId = canteens.ToList()[0].Id,
+                    PickupTime = new DateTime(2022, 11, 16, 15, 15, 00),
+                    AvailableTill = new DateTime(2022, 11, 16, 17, 15, 00),
+                    EighteenPlus = false,
+                    Price = decimal.Parse("7,50"),
+                    Category = (int) Category.Drank,
+                    ReservedByStudentId = students.ToList()[0].Id
                 }
             };
 
@@ -129,6 +143,7 @@ namespace Infrastructure.EF
                 {
                     Id = 1,
                     Name = "Helma",
+                    Email = "Helma@avanscanteen.nl",
                     EmployeeNumber = 555,
                     CanteenId = canteens.ToList()[0].Id
 
@@ -137,6 +152,7 @@ namespace Infrastructure.EF
                 {
                     Id = 2,
                     Name = "Erika",
+                    Email = "Erika@avanscanteen.nl",
                     EmployeeNumber = 678,
                     CanteenId = canteens.ToList()[1].Id
                 }

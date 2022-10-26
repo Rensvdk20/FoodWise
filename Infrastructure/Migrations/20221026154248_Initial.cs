@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.EF.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {
@@ -64,6 +64,7 @@ namespace Infrastructure.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmployeeNumber = table.Column<int>(type: "int", nullable: false),
                     CanteenId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -92,7 +93,7 @@ namespace Infrastructure.EF.Migrations
                     EighteenPlus = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<decimal>(type: "smallmoney", nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
-                    ReservedById = table.Column<int>(type: "int", nullable: true)
+                    ReservedByStudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,8 +105,8 @@ namespace Infrastructure.EF.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Packages_Students_ReservedById",
-                        column: x => x.ReservedById,
+                        name: "FK_Packages_Students_ReservedByStudentId",
+                        column: x => x.ReservedByStudentId,
                         principalTable: "Students",
                         principalColumn: "Id");
                 });
@@ -162,20 +163,21 @@ namespace Infrastructure.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "CanteenEmployees",
-                columns: new[] { "Id", "CanteenId", "EmployeeNumber", "Name" },
+                columns: new[] { "Id", "CanteenId", "Email", "EmployeeNumber", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, 555, "Helma" },
-                    { 2, 2, 678, "Erika" }
+                    { 1, 1, "Helma@avanscanteen.nl", 555, "Helma" },
+                    { 2, 2, "Erika@avanscanteen.nl", 678, "Erika" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Packages",
-                columns: new[] { "Id", "AvailableTill", "CanteenId", "Category", "Description", "EighteenPlus", "Name", "PickupTime", "Price", "ReservedById" },
+                columns: new[] { "Id", "AvailableTill", "CanteenId", "Category", "Description", "EighteenPlus", "Name", "PickupTime", "Price", "ReservedByStudentId" },
                 values: new object[,]
                 {
                     { 1, new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified), 1, 1, "Lekker gezond pakket met fruit aan te raden voor elke student", false, "Gezond pakket", new DateTime(2022, 11, 16, 13, 15, 0, 0, DateTimeKind.Unspecified), 4.50m, null },
-                    { 2, new DateTime(2022, 11, 18, 16, 15, 0, 0, DateTimeKind.Unspecified), 2, 1, "Heerlijke broodjes als lunch of als tussendoortje", true, "Broodjes pakket", new DateTime(2022, 11, 18, 14, 15, 0, 0, DateTimeKind.Unspecified), 6.50m, null }
+                    { 2, new DateTime(2022, 11, 18, 16, 15, 0, 0, DateTimeKind.Unspecified), 2, 1, "Heerlijke broodjes als lunch of als tussendoortje", true, "Broodjes pakket", new DateTime(2022, 11, 18, 14, 15, 0, 0, DateTimeKind.Unspecified), 6.50m, null },
+                    { 3, new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified), 1, 2, "Verschillende soorten soep in een compact pakket", false, "Soep pakket", new DateTime(2022, 11, 16, 15, 15, 0, 0, DateTimeKind.Unspecified), 7.50m, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -206,9 +208,9 @@ namespace Infrastructure.EF.Migrations
                 column: "CanteenId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Packages_ReservedById",
+                name: "IX_Packages_ReservedByStudentId",
                 table: "Packages",
-                column: "ReservedById");
+                column: "ReservedByStudentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

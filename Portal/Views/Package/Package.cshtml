@@ -14,7 +14,9 @@
             <p>
                 @package.Description
             </p>
-            <button type="button" class="btn btn-primary">Reserveer</button>
+            <p class="text-success">@ViewBag.SuccessMessage</p>
+            <p class="text-danger">@ViewBag.ErrorMessage</p>
+            <a type="button" asp-controller="Package" asp-action="ReservePackage" asp-route-id="@package.Id" class="btn btn-primary">Reserveer</a>
         </div>
         <div class="col-lg-6 col-md-12 header-item order-lg-2 d-flex justify-content-center order-sm-1 order-1">
             <img style="width:60%" src="~/img/openBox.png">

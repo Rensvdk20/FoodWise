@@ -1,6 +1,7 @@
 using DomainServices.Repos;
 using Infrastructure.EF;
 using Infrastructure.IF;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IStudentRepo, StudentEFRepo>();
+builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 builder.Services.AddScoped<IPackageRepo, PackageRepo>();
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped<ICanteenRepo, CanteenRepo>();
@@ -23,6 +24,14 @@ builder.Services.AddDbContext<FoodWiseIdentityDbContext>(opts =>
 {
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:IFConnection"]);
 });
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<FoodWiseIdentityDbContext>();
 
 var app = builder.Build();
 
@@ -39,6 +48,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

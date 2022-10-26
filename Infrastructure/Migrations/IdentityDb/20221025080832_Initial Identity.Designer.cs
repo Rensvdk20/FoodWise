@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.IdentityDb
 {
     [DbContext(typeof(FoodWiseIdentityDbContext))]
-    [Migration("20221023145028_Initial Identity")]
+    [Migration("20221025080832_Initial Identity")]
     partial class InitialIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,9 +54,16 @@ namespace Infrastructure.Migrations.IdentityDb
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "299bcb35-1f83-4733-8182-e420432683b9",
+                            ConcurrencyStamp = "cd82f34b-a49f-498a-abd4-26f33ff8ceac",
                             Name = "CanteenEmployee",
                             NormalizedName = "CANTEENEMPLOYEE"
+                        },
+                        new
+                        {
+                            Id = "769745ae-6d81-4b44-9df1-aca86729b89a",
+                            ConcurrencyStamp = "fd0c0cb6-6f0e-471f-813d-ff33f1536821",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         });
                 });
 
@@ -154,17 +161,33 @@ namespace Infrastructure.Migrations.IdentityDb
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "896e82dc-87c2-4973-ba54-3e173c5feb52",
-                            Email = "Helma@avanskantine.nl",
+                            ConcurrencyStamp = "cc539c25-dc41-4d49-9e00-3c69953b2230",
+                            Email = "Helma@avanscanteen.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "HELMA@AVANSKANTINE.NL",
+                            NormalizedEmail = "HELMA@AVANSCANTEEN.NL",
                             NormalizedUserName = "HELMA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOrjfY6ajH6qWNv4oH1ybvtjcZYO6ClnS3UpSwIfxmfPl9wtZR2/2uUMePa6KCosWA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEpR6aWvwnexQZdYmkxjw7hxpZ6GTh8ngeFCZKoseN3IP2zQwuXVNmchUyhDpgg0Zw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "115b382e-255f-43f1-815f-d1421f588f9e",
+                            SecurityStamp = "88f3d287-bb9a-4641-90b2-cfbe8d399141",
                             TwoFactorEnabled = false,
                             UserName = "Helma"
+                        },
+                        new
+                        {
+                            Id = "5217197a-f73e-4131-9b5a-dbbfa612a332",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "84b96d1a-1293-471c-958a-1937a68fdb2e",
+                            Email = "Mark@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MARK@GMAIL.COM",
+                            NormalizedUserName = "MARK",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO+NtziDkT/XYu76t2+GTDKnRiR165KHt1+s6Z4Xi++aIQW8qi7R69NRDFjjq5Bcbg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "053602d3-f34f-4c08-befc-b53a4d7cfd75",
+                            TwoFactorEnabled = false,
+                            UserName = "Mark"
                         });
                 });
 
@@ -234,6 +257,11 @@ namespace Infrastructure.Migrations.IdentityDb
                         {
                             UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
+                        },
+                        new
+                        {
+                            UserId = "5217197a-f73e-4131-9b5a-dbbfa612a332",
+                            RoleId = "769745ae-6d81-4b44-9df1-aca86729b89a"
                         });
                 });
 

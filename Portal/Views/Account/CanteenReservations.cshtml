@@ -1,0 +1,45 @@
+﻿@using Domain;
+@model IEnumerable<Package>
+
+@{
+    Layout = "_LayoutCanteen";
+
+    ViewData["Title"] = "Kantine Reserveringen";
+    int count = 1;
+}
+
+
+<div class="canteen-content-top">
+    <h1>Reservering</h1>
+</div>
+<div class="canteen-content-table">
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Naam</th>
+            <th>Pakket</th>
+            <th>Datum/tijd van ophalen</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var package in @Model)
+        {
+            string date = date = @package.PickupTime.ToString("d/M/yyyy HH:mm") + " - " + @package.AvailableTill.ToString("d/M/yyyy HH:mm");
+            if (package.PickupTime.Year == package.AvailableTill.Year && package.PickupTime.Month == package.AvailableTill.Month && package.PickupTime.Day == package.AvailableTill.Day)
+            {
+                date = @package.PickupTime.ToString("d/M/yyyy HH:mm") + " - " + @package.AvailableTill.ToString("HH:mm");
+            }
+
+            <tr>
+                <td>@count</td>
+                    <td>@package.ReservedByStudent.FirstName @package.ReservedByStudent.LastName</td>
+                <td>@package.Name</td>
+                <td>@date</td>
+            </tr>
+            count++;
+        }
+
+        </tbody>
+    </table>
+</div>

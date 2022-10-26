@@ -157,12 +157,25 @@ namespace Infrastructure.Migrations.IdentityDb
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2c5e174e-3b0e-446f-86af-483d56fd7210", "299bcb35-1f83-4733-8182-e420432683b9", "CanteenEmployee", "CANTEENEMPLOYEE" });
+                values: new object[,]
+                {
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", "cd82f34b-a49f-498a-abd4-26f33ff8ceac", "CanteenEmployee", "CANTEENEMPLOYEE" },
+                    { "769745ae-6d81-4b44-9df1-aca86729b89a", "fd0c0cb6-6f0e-471f-813d-ff33f1536821", "Student", "STUDENT" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "896e82dc-87c2-4973-ba54-3e173c5feb52", "Helma@avanskantine.nl", false, false, null, "HELMA@AVANSKANTINE.NL", "HELMA", "AQAAAAEAACcQAAAAEOrjfY6ajH6qWNv4oH1ybvtjcZYO6ClnS3UpSwIfxmfPl9wtZR2/2uUMePa6KCosWA==", null, false, "115b382e-255f-43f1-815f-d1421f588f9e", false, "Helma" });
+                values: new object[,]
+                {
+                    { "5217197a-f73e-4131-9b5a-dbbfa612a332", 0, "84b96d1a-1293-471c-958a-1937a68fdb2e", "Mark@gmail.com", false, false, null, "MARK@GMAIL.COM", "MARK", "AQAAAAEAACcQAAAAEO+NtziDkT/XYu76t2+GTDKnRiR165KHt1+s6Z4Xi++aIQW8qi7R69NRDFjjq5Bcbg==", null, false, "053602d3-f34f-4c08-befc-b53a4d7cfd75", false, "Mark" },
+                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "cc539c25-dc41-4d49-9e00-3c69953b2230", "Helma@avanscanteen.nl", false, false, null, "HELMA@AVANSCANTEEN.NL", "HELMA", "AQAAAAEAACcQAAAAEEpR6aWvwnexQZdYmkxjw7hxpZ6GTh8ngeFCZKoseN3IP2zQwuXVNmchUyhDpgg0Zw==", null, false, "88f3d287-bb9a-4641-90b2-cfbe8d399141", false, "Helma" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "769745ae-6d81-4b44-9df1-aca86729b89a", "5217197a-f73e-4131-9b5a-dbbfa612a332" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

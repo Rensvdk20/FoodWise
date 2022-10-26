@@ -1,0 +1,68 @@
+﻿@using Domain;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AddPackageViewModel;
+
+@{
+    Layout = "_LayoutCanteen";
+
+    ViewData["Title"] = "Pakket toevoegen";
+}
+
+<div class="canteen-content-top">
+    <h1>Pakket toevoegen</h1>
+</div>
+<div>
+    <div class="canteen-content-form-container">
+        <div class="canteen-content-form">
+            <div class="text-success">@ViewBag.Message</div>
+            <form asp-action="CanteenAddPackage" asp-controller="Account" method="post">
+                <label asp-for="Name">Naam</label>
+                <div><span asp-validation-for="Name" class="text-danger"></span></div>
+                <input asp-for="Name" class="form-control"/>
+
+                <label asp-for="Description">Beschrijving</label>
+                <div><span asp-validation-for="Description" class="text-danger"></span></div>
+                <input asp-for="Description" class="form-control"/>
+
+                <label asp-for="SelectedProducts">Products</label><br/>
+                <select asp-for="SelectedProducts" name="SelectedProducts" multiple="multiple">
+                    @foreach (var product in ViewBag.Products)
+                    {
+                        <option value="@product.Id">@product.Name</option>
+                    }
+                </select>
+                <br />
+
+                @*<label asp-for="CanteenId">Canteen</label><br/>
+                <select asp-for="CanteenId">
+                    @foreach (var canteen in ViewBag.Canteen)
+                    {
+                        <option value="@canteen.Id">@Enum.GetName(typeof(Location), canteen.Location)</option>
+                    }
+                </select>
+                <br/>*@
+                <input asp-for="CanteenId" type="hidden" value="@(ViewBag.CanteenEmployee.CanteenId)"/>
+
+                <label asp-for="PickupTime">Ophaal moment</label>
+                <div><span asp-validation-for="PickupTime" class="text-danger"></span></div>
+                <input id="pickupTime" type="datetime-local" asp-for="PickupTime" class="form-control"/>
+
+                <label asp-for="AvailableTill">Beschikbaar tot</label>
+                <div><span asp-validation-for="AvailableTill" class="text-danger"></span></div>
+                <input asp-for="AvailableTill" class="form-control"/>
+
+                <label asp-for="Price">Prijs</label>
+                <div><span asp-validation-for="Price" class="text-danger"></span></div>
+                <input type="decimal" asp-for="Price" class="form-control"/>
+
+                <label asp-for="Category">Categorie</label><br/>
+                <select asp-for="Category" asp-items="@(Html.GetEnumSelectList<Category>())">
+                </select>
+                
+                <div class="text-danger" asp-validation-summary="All"></div>
+
+                <input type="submit" class="btn btn-primary" value="Voeg toe">
+            </form>
+        </div>
+    </div>
+</div>

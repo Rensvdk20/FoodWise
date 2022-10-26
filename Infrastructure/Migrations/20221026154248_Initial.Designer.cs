@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.EF.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FoodWiseDbContext))]
-    [Migration("20221022180553_Initial")]
+    [Migration("20221026154248_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,10 @@ namespace Infrastructure.EF.Migrations
                     b.Property<int>("CanteenId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("EmployeeNumber")
                         .HasColumnType("int");
 
@@ -86,6 +90,7 @@ namespace Infrastructure.EF.Migrations
                         {
                             Id = 1,
                             CanteenId = 1,
+                            Email = "Helma@avanscanteen.nl",
                             EmployeeNumber = 555,
                             Name = "Helma"
                         },
@@ -93,6 +98,7 @@ namespace Infrastructure.EF.Migrations
                         {
                             Id = 2,
                             CanteenId = 2,
+                            Email = "Erika@avanscanteen.nl",
                             EmployeeNumber = 678,
                             Name = "Erika"
                         });
@@ -109,7 +115,8 @@ namespace Infrastructure.EF.Migrations
                     b.Property<DateTime>("AvailableTill")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CanteenId")
+                    b.Property<int?>("CanteenId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Category")
@@ -134,14 +141,14 @@ namespace Infrastructure.EF.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("smallmoney");
 
-                    b.Property<int?>("ReservedById")
+                    b.Property<int?>("ReservedByStudentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CanteenId");
 
-                    b.HasIndex("ReservedById");
+                    b.HasIndex("ReservedByStudentId");
 
                     b.ToTable("Packages");
 
@@ -169,6 +176,19 @@ namespace Infrastructure.EF.Migrations
                             Name = "Broodjes pakket",
                             PickupTime = new DateTime(2022, 11, 18, 14, 15, 0, 0, DateTimeKind.Unspecified),
                             Price = 6.50m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AvailableTill = new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified),
+                            CanteenId = 1,
+                            Category = 2,
+                            Description = "Verschillende soorten soep in een compact pakket",
+                            EighteenPlus = false,
+                            Name = "Soep pakket",
+                            PickupTime = new DateTime(2022, 11, 16, 15, 15, 0, 0, DateTimeKind.Unspecified),
+                            Price = 7.50m,
+                            ReservedByStudentId = 1
                         });
                 });
 
@@ -344,13 +364,13 @@ namespace Infrastructure.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Student", "ReservedBy")
+                    b.HasOne("Domain.Student", "ReservedByStudent")
                         .WithMany()
-                        .HasForeignKey("ReservedById");
+                        .HasForeignKey("ReservedByStudentId");
 
                     b.Navigation("Canteen");
 
-                    b.Navigation("ReservedBy");
+                    b.Navigation("ReservedByStudent");
                 });
 
             modelBuilder.Entity("Package_Product", b =>

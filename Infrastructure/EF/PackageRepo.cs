@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Domain;
 using DomainServices.Repos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Infrastructure.EF
 {
@@ -23,9 +24,43 @@ namespace Infrastructure.EF
             return _context.Packages.Include(c => c.Canteen).Include(p => p.Products);
         }
 
+        public IQueryable<Package> GetAllPackagesBasic()
+        {
+            return _context.Packages;
+        }
+
         public Package GetPackageById(int id)
         {
             return _context.Packages.Include(p => p.Products).SingleOrDefault(package => package.Id == id)!;
+        }
+
+        public IQueryable<Package> GetAllUnreservedPackages()
+        {
+            return _context.Packages.Where(p => p.ReservedByStudentId == null).Include(p => p.Products);
+        }
+
+        public IQueryable<Package> GetAllReservedPackages()
+        {
+            return _context.Packages.Where(p => p.ReservedByStudentId != null).Include(p => p.Products).Include(s => s.ReservedByStudent);
+        }
+
+        public IQueryable<Package> GetPackagesFromLoggedInStudent(string email)
+        {
+            return _context.Packages.Include(s => s.ReservedByStudent).Where(p => p.ReservedByStudent.Email == email);
+        }
+
+        public async Task<bool> ReservePackageById(int studentId, int packageId)
+        {
+            Package package = _context.Packages.SingleOrDefault(p => p.Id == packageId);
+            if (package.ReservedByStudentId == null)
+            {
+                package.ReservedByStudentId = studentId;
+                _context.Update(package);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
         public async Task AddPackage(Package newPackage)

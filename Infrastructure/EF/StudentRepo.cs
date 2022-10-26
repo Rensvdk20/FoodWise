@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using DomainServices.Repos;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EF
 {
-    public class StudentEFRepo : IStudentRepo
+    public class StudentRepo : IStudentRepo
     {
         private readonly FoodWiseDbContext _context;
 
-        public StudentEFRepo(FoodWiseDbContext context)
+        public StudentRepo(FoodWiseDbContext context)
         {
             _context = context;
         }
@@ -25,6 +26,11 @@ namespace Infrastructure.EF
         public Student GetStudentById(int id)
         {
             return _context.Students.SingleOrDefault(student => student.Id == id);
+        }
+
+        public Student getStudentByEmail(string email)
+        {
+            return _context.Students.SingleOrDefault(s => s.Email == email);
         }
     }
 }

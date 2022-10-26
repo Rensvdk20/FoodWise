@@ -25,7 +25,12 @@ namespace Infrastructure.EF
 
         public CanteenEmployee GetCanteenEmployeeById(int id)
         {
-            return _context.CanteenEmployees.SingleOrDefault(canteenEmployee => canteenEmployee.Id == id)!;
+            return _context.CanteenEmployees.SingleOrDefault(canteenEmployee => canteenEmployee.Id == id);
+        }
+
+        public CanteenEmployee getCanteenEmployeeByEmail(string email)
+        {
+            return _context.CanteenEmployees.Include(c => c.Canteen).SingleOrDefault(canteenEmployee => canteenEmployee.Email == email);
         }
     }
 }
