@@ -11,5 +11,6 @@ namespace DomainServices.Repos
     {
         IQueryable<Student> GetAllStudents();
         Student GetStudentById(int id);
+        Student getStudentByEmail(string email);
     }
 }

@@ -11,5 +11,7 @@ namespace DomainServices.Repos
     {
         IQueryable<CanteenEmployee> GetAllCanteenEmployees();
         CanteenEmployee GetCanteenEmployeeById(int id);
+
+        CanteenEmployee getCanteenEmployeeByEmail(string email);
     }
 }
