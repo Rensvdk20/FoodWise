@@ -1,0 +1,78 @@
+﻿@using Domain
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_LayoutCanteen";
+
+    ViewData["Title"] = "Kantine pakketten";
+    int count = 0;
+}
+
+
+<div class="canteen-content-top">
+    <h1>Pakketten</h1>
+    <div class="canteen-content-options">
+        <select id="cityDropdown" onchange="getPackages()" asp-items="Html.GetEnumSelectList<City>()">
+            <option value="-1">Alle steden</option>
+        </select>
+        <select id="locationDropdown" onchange="getPackages()" asp-items="Html.GetEnumSelectList<Location>()">
+            <option value="-1">Alle kantine's</option>
+        </select>
+    </div>
+</div>
+<div class="canteen-content-table">
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Naam</th>
+            <th>Ophaal moment</th>
+            <th>Beschikbaar tot</th>
+            <th>Stad</th>
+            <th>Locatie</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody id="packagesByLocation">
+        @foreach (var package in @Model)
+        {
+            count++;
+            <tr>
+                <td>@count</td>
+                <td>@package.Name</td>
+                <td>@package.PickupTime</td>
+                <td>@package.AvailableTill</td>
+                <td>@Enum.GetName(typeof(City), @package.Canteen.City)</td>
+                <td>@Enum.GetName(typeof(Location), @package.Canteen.Location)</td>
+                <td><a>Edit</a></td>
+                <td><a>Remove</a></td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    //Select default canteen
+    document.getElementById("locationDropdown").selectedIndex = @ViewBag.CanteenEmployeeDefaultLocation + 1;
+    document.getElementById("cityDropdown").selectedIndex = @ViewBag.CanteenEmployeeDefaultCity + 1;
+
+    //Get the packages with an ajax call
+    function getPackages() {
+        $.ajax({
+            url: '@Url.Action("FilterCanteenPackages", "Account")',
+            datatype: 'html',
+            method: 'GET',
+            data: { searchCity: $("#cityDropdown").val(), searchLocation: $("#locationDropdown").val() },
+            success: function (res) {
+                //Put the new package data into the package div
+                $('#packagesByLocation').html(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+</script>

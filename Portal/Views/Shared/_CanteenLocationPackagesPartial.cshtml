@@ -1,0 +1,21 @@
+﻿@{
+    int count = 0;
+}
+
+@using Domain
+@model IEnumerable<Domain.Package>
+
+@foreach (var package in @Model)
+{
+    count++;
+    <tr>
+        <td>@count</td>
+        <td>@package.Name</td>
+        <td>@package.PickupTime</td>
+        <td>@package.AvailableTill</td>
+        <td>@Enum.GetName(typeof(City), @package.Canteen.City)</td>
+        <td>@Enum.GetName(typeof(Location), @package.Canteen.Location)</td>
+        <td><a>Edit</a></td>
+        <td><a>Remove</a></td>
+    </tr>
+}

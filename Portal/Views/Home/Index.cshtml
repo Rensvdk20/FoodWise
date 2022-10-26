@@ -1,8 +1,110 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="header">
+    <div class="row">
+        <div class="col-lg-6 col-md-12 header-item">
+            <h1>Welkom bij Foodwise!</h1>
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Alias et blanditiis exercitationem dolorum distinctio, itaque recusandae accusamus sit eos?
+                Veritatis cum voluptate cupiditate aspernatur consectetur dolor exercitationem laudantium quis fugit!
+            </p>
+            <a asp-controller="Package" asp-action="Index" type="button" class="btn btn-primary">Bekijk de pakketten</a>
+        </div>
+        <div class="col-lg-6 col-md-12 header-item d-lg-flex d-none">
+            <img src="~/img/Illustrations/Pickup.svg" alt="Persoon geeft een pakket aan de andere persoon">
+        </div>
+    </div>
+</div>
+<div class="info">
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 info-item-container">
+            <div class="info-item">
+                <img src="~/img/Illustrations/leaf-solid.svg" alt="Blad van een plant">
+                <h3>Duurzaam</h3>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Alias et blanditiis exercitationem dolorum distinctio,
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 info-item-container">
+            <div class="info-item">
+                <img src="~/img/Illustrations/handshake-simple-solid.svg" alt="Handgeschud">
+                <h3>Duurzaam</h3>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Alias et blanditiis exercitationem dolorum distinctio,
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 info-item-container">
+            <div class="info-item">
+                <img src="~/img/Illustrations/box-solid.svg" alt="Pakket doos">
+                <h3>Duurzaam</h3>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Alias et blanditiis exercitationem dolorum distinctio,
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 info-item-container">
+            <div class="info-item">
+                <img src="~/img/Illustrations/recycle-solid.svg" alt="Recycle icoontje">
+                <h3>Duurzaam</h3>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Alias et blanditiis exercitationem dolorum distinctio,
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="banner">
+    <div class="banner-item">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Nam dolor iusto, provident accusantium quod magni rerum qui non inventore dolore ab blanditiis similique delectus consectetur?
+                    Laborum magnam autem deleniti assumenda.
+                    Alias et blanditiis exercitationem dolorum distinctio, itaque recusandae accusamus sit eos?
+                    Veritatis cum voluptate cupiditate aspernatur consectetur dolor exercitationem laudantium quis fugit!
+                </p>
+            </div>
+            <div class="col-3 d-lg-flex d-none"></div>
+        </div>
+    </div>
+</div>
+<div class="bigInfo">
+    <div class="row">
+        <div class="col-lg-6 order-2 order-lg-1 bigInfo-img-left">
+            <img src="~/img/Illustrations/Package.svg" alt="Persoon met pakket">
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2">
+            <h2>Gemakkelijk maaltijden ophalen</h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Nam dolor iusto, provident accusantium quod magni rerum qui non inventore dolore ab blanditiis similique delectus consectetur?
+            Laborum magnam autem deleniti assumenda.
+            Alias et blanditiis exercitationem dolorum distinctio, itaque recusandae accusamus sit eos?
+            Veritatis cum voluptate cupiditate aspernatur consectetur dolor exercitationem laudantium quis fugit!
+        </div>
+    </div>
+</div>
+<div class="bigInfo">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Gemakkelijk maaltijden ophalen</h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Nam dolor iusto, provident accusantium quod magni rerum qui non inventore dolore ab blanditiis similique delectus consectetur?
+            Laborum magnam autem deleniti assumenda.
+            Alias et blanditiis exercitationem dolorum distinctio, itaque recusandae accusamus sit eos?
+            Veritatis cum voluptate cupiditate aspernatur consectetur dolor exercitationem laudantium quis fugit!
+        </div>
+        <div class="col-lg-6 bigInfo-img-right">
+            <img src="~/img/Illustrations/Choice.svg" alt="Persoon bekijkt pakketten">
+        </div>
+    </div>
 </div>

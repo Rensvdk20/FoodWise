@@ -1,7 +1,37 @@
+using DomainServices.Repos;
+using Infrastructure.EF;
+using Infrastructure.IF;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IStudentRepo, StudentRepo>();
+builder.Services.AddScoped<IPackageRepo, PackageRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
+builder.Services.AddScoped<ICanteenRepo, CanteenRepo>();
+builder.Services.AddScoped<ICanteenEmployeeRepo, CanteenEmployeeRepo>();
+
+builder.Services.AddDbContext<FoodWiseDbContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration["ConnectionStrings:EFConnection"]);
+});
+
+builder.Services.AddDbContext<FoodWiseIdentityDbContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration["ConnectionStrings:IFConnection"]);
+});
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<FoodWiseIdentityDbContext>();
 
 var app = builder.Build();
 
@@ -18,10 +48,22 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "Responses",
+//    pattern: "/Package}/{id?}",
+//    defaults: new { controller = "Package", action = "Package" });
+
+app.MapControllerRoute(
+    name: "Package",
+    pattern: "Package{id}",
+    defaults: new { Controller = "Package", action = "Package" }
+);
 
 app.Run();
