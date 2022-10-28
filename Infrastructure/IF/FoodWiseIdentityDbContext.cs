@@ -47,9 +47,19 @@ namespace Infrastructure.IF
                 Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                 UserName = "Helma",
                 NormalizedUserName = "Helma".ToUpper(),
-                Email = "Helma@avanscanteen.nl",
+                Email = "helma@avanscanteen.nl",
                 NormalizedEmail = "Helma@avanscanteen.nl".ToUpper(),
                 PasswordHash = hasher.HashPassword(null, "12345")
+            };
+
+            IdentityUser canteenEmployee2 = new IdentityUser
+            {
+                Id = "6714f6fe-6e15-47aa-b9c2-d771f61a6af2",
+                UserName = "Erika",
+                NormalizedUserName = "Erika".ToUpper(),
+                Email = "erika@avanscanteen.nl",
+                NormalizedEmail = "erika@avanscanteen.nl".ToUpper(),
+                PasswordHash = hasher.HashPassword(null, "123456")
             };
 
             IdentityUser student1 = new IdentityUser
@@ -62,7 +72,17 @@ namespace Infrastructure.IF
                 PasswordHash = hasher.HashPassword(null, "1234")
             };
 
-            modelBuilder.Entity<IdentityUser>().HasData(canteenEmployee1, student1);
+            IdentityUser student2 = new IdentityUser
+            {
+                Id = "be4f72d1-f6e8-4450-b1d8-9b01e3a003c4",
+                UserName = "Robin",
+                NormalizedUserName = "Robin".ToUpper(),
+                Email = "Robin@gmail.com",
+                NormalizedEmail = "Robin@gmail.com".ToUpper(),
+                PasswordHash = hasher.HashPassword(null, "123")
+            };
+
+            modelBuilder.Entity<IdentityUser>().HasData(canteenEmployee1, canteenEmployee2, student1, student2);
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
@@ -72,8 +92,18 @@ namespace Infrastructure.IF
                 },
                 new IdentityUserRole<string>
                 {
+                    RoleId = canteenEmployeeRole.Id,
+                    UserId = canteenEmployee2.Id
+                },
+                new IdentityUserRole<string>
+                {
                     RoleId = studentRole.Id,
                     UserId = student1.Id
+                },
+                new IdentityUserRole<string>
+                {
+                    RoleId = studentRole.Id,
+                    UserId = student2.Id
                 }
             );
         }

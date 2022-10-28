@@ -38,6 +38,17 @@ namespace Infrastructure.EF
                     StudentNumber = 2184500,
                     StudyCity = City.Breda,
                     PhoneNumber = "+31612345678"
+                },
+                new Student()
+                {
+                    Id = 2,
+                    FirstName = "Robin",
+                    LastName = "De Vlucht",
+                    Email = "Robin@gmail.com",
+                    Birthday = new DateTime(2007, 4, 5),
+                    StudentNumber = 2184785,
+                    StudyCity = City.DenBosch,
+                    PhoneNumber = "+31613579246"
                 }
             };
 
@@ -115,7 +126,7 @@ namespace Infrastructure.EF
                     CanteenId = canteens.ToList()[1].Id,
                     PickupTime = new DateTime(2022, 11, 18, 14, 15, 00),
                     AvailableTill = new DateTime(2022, 11, 18, 16, 15, 00),
-                    EighteenPlus = true,
+                    EighteenPlus = false,
                     Price = decimal.Parse("6,50"),
                     Category = (int) Category.Fruit,
                     ReservedByStudentId = null
@@ -123,16 +134,16 @@ namespace Infrastructure.EF
                 new Package()
                 {
                     Id = 3,
-                    Name = "Soep pakket",
-                    Description = "Verschillende soorten soep in een compact pakket",
+                    Name = "Drank pakket",
+                    Description = "Verschillende soorten drank en een broodje",
                     Products = new List<Product>(),
                     CanteenId = canteens.ToList()[0].Id,
                     PickupTime = new DateTime(2022, 11, 16, 15, 15, 00),
                     AvailableTill = new DateTime(2022, 11, 16, 17, 15, 00),
-                    EighteenPlus = false,
+                    EighteenPlus = true,
                     Price = decimal.Parse("7,50"),
                     Category = (int) Category.Drank,
-                    ReservedByStudentId = students.ToList()[0].Id
+                    ReservedByStudentId = null
                 }
             };
 
@@ -183,7 +194,8 @@ namespace Infrastructure.EF
                             new { PackageId = 1, ProductId = 2 },
                             new { PackageId = 2, ProductId = 3 },
                             new { PackageId = 2, ProductId = 4 },
-                            new { PackageId = 2, ProductId = 5 }
+                            new { PackageId = 3, ProductId = 4 },
+                            new { PackageId = 3, ProductId = 5 }
                         );
                     });
 

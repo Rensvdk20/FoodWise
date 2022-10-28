@@ -52,14 +52,14 @@ namespace Infrastructure.Migrations.IdentityDb
                         new
                         {
                             Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "cd82f34b-a49f-498a-abd4-26f33ff8ceac",
+                            ConcurrencyStamp = "c97c668b-76c3-4d16-919b-5d22443be0ac",
                             Name = "CanteenEmployee",
                             NormalizedName = "CANTEENEMPLOYEE"
                         },
                         new
                         {
                             Id = "769745ae-6d81-4b44-9df1-aca86729b89a",
-                            ConcurrencyStamp = "fd0c0cb6-6f0e-471f-813d-ff33f1536821",
+                            ConcurrencyStamp = "86d084e4-cd0e-4e21-8f6e-24fe9e42c718",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -159,33 +159,65 @@ namespace Infrastructure.Migrations.IdentityDb
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc539c25-dc41-4d49-9e00-3c69953b2230",
-                            Email = "Helma@avanscanteen.nl",
+                            ConcurrencyStamp = "6639460a-b8f9-4f3b-928b-136b49a2145e",
+                            Email = "helma@avanscanteen.nl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "HELMA@AVANSCANTEEN.NL",
                             NormalizedUserName = "HELMA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEpR6aWvwnexQZdYmkxjw7hxpZ6GTh8ngeFCZKoseN3IP2zQwuXVNmchUyhDpgg0Zw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENczPFl8D7Ppa3t7VThDgOx9g9KNCipk2BtXr3eE/89qRhAfxyakO7QY9+vfT5UFvQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "88f3d287-bb9a-4641-90b2-cfbe8d399141",
+                            SecurityStamp = "dd623db9-dfb8-4335-ac56-d98d7b8a6721",
                             TwoFactorEnabled = false,
                             UserName = "Helma"
                         },
                         new
                         {
+                            Id = "6714f6fe-6e15-47aa-b9c2-d771f61a6af2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c1cf694c-f0e1-486d-b8b6-daed1a9ae9ee",
+                            Email = "erika@avanscanteen.nl",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ERIKA@AVANSCANTEEN.NL",
+                            NormalizedUserName = "ERIKA",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKTUslgPA8BfhhjVMrNjOpJN0baN1dBTqBUHuP5nkDl4g2qUddzD7reb8UVlLV9c+g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "0c29e2b6-6410-4870-9bca-793c3cdfd6c5",
+                            TwoFactorEnabled = false,
+                            UserName = "Erika"
+                        },
+                        new
+                        {
                             Id = "5217197a-f73e-4131-9b5a-dbbfa612a332",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "84b96d1a-1293-471c-958a-1937a68fdb2e",
+                            ConcurrencyStamp = "654c4b61-a526-4e13-8631-006440637bbe",
                             Email = "Mark@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MARK@GMAIL.COM",
                             NormalizedUserName = "MARK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO+NtziDkT/XYu76t2+GTDKnRiR165KHt1+s6Z4Xi++aIQW8qi7R69NRDFjjq5Bcbg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH/yNWR/zYMJ5RAnUYsiiSdKPRAsANLzuc1Qk27B9UMcPJpOHpEzxVUb1RNVFgmTMg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "053602d3-f34f-4c08-befc-b53a4d7cfd75",
+                            SecurityStamp = "f395efe8-932a-425d-b78b-b7d8d3a6e616",
                             TwoFactorEnabled = false,
                             UserName = "Mark"
+                        },
+                        new
+                        {
+                            Id = "be4f72d1-f6e8-4450-b1d8-9b01e3a003c4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bc38c2dd-ebc3-4759-91dd-9c0eb100c94f",
+                            Email = "Robin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ROBIN@GMAIL.COM",
+                            NormalizedUserName = "ROBIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIGTU2DmbLBpyMVkEMo8DLQAcXL5Tg1fItcNxfH+sP/b2VxY8j99VTZtUm47o1Wktw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8a3207f6-06c7-4140-ad8d-3f19a9e706e0",
+                            TwoFactorEnabled = false,
+                            UserName = "Robin"
                         });
                 });
 
@@ -258,7 +290,17 @@ namespace Infrastructure.Migrations.IdentityDb
                         },
                         new
                         {
+                            UserId = "6714f6fe-6e15-47aa-b9c2-d771f61a6af2",
+                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
+                        },
+                        new
+                        {
                             UserId = "5217197a-f73e-4131-9b5a-dbbfa612a332",
+                            RoleId = "769745ae-6d81-4b44-9df1-aca86729b89a"
+                        },
+                        new
+                        {
+                            UserId = "be4f72d1-f6e8-4450-b1d8-9b01e3a003c4",
                             RoleId = "769745ae-6d81-4b44-9df1-aca86729b89a"
                         });
                 });
