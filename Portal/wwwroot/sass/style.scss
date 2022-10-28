@@ -1,0 +1,556 @@
+//Default
+$primary: #c6002a;
+$secondary: #212121;
+$white: #ffffff;
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    color: white;
+
+    &:hover {
+        cursor: pointer;
+        color: $primary !important;
+    }
+}
+
+a[type=button] {
+    // color: white !important;
+
+    &:hover {
+        color: white !important;
+    }
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+select {
+    padding: 5px 10px;
+}
+
+//Bootstrap
+$xs: 576px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+
+.btn-primary {
+    border-radius: 10px;
+    background-color: $primary !important;
+    border-color: $primary !important;
+
+    &:hover {
+        background-color: darken($primary, 3%) !important;
+        border-color: $secondary;
+    }
+}
+
+//Styling
+nav {
+    a {
+        color: $secondary !important;
+    }
+}
+
+main {
+    margin-top: 10px;
+
+    // ##### Home ######
+    .container {
+        > div {
+            margin-bottom: 60px;
+
+            @media screen and (max-width: $sm) {
+                margin-bottom: 40px;
+            }
+        }
+    }
+
+    .header {
+        &-item {
+            p {
+                width: 80%;
+
+                @media screen and (max-width: $md) {
+                   width: 100%;
+                }
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .info {
+        &-item {
+            // border: 1px solid black;
+            height: 100%;
+            border-radius: 25px;
+            box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+            padding: 1rem;
+
+            img {
+                height: 50px;
+                margin-bottom: 10px;
+            }
+
+            @media screen and (max-width: $md) {
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .banner {
+        margin: 80px 0 !important;
+
+        &-item {
+            border-radius: 4rem;
+            background-color: $secondary;
+            color: $white;
+
+            div:nth-of-type(2) {
+                display: flex;
+                align-items: center;
+
+                &::after {
+                    content: "";
+                    display: block;
+                    background-repeat: no-repeat;
+                    background-image: url('../../img/openBox.png');
+                    position: relative;
+                    height: 150px;
+                    width: 150px;
+                    background-size: contain;
+                    
+                }
+            }
+
+            p {
+                padding: 3rem 6rem;
+                margin-bottom: 0;
+
+                @media screen and (max-width: $sm) {
+                    padding: 2rem;
+                    text-align: center;
+                }
+            }
+        }
+
+        @media screen and (max-width: $md) {
+            margin: 0 0 60px 0 !important;
+        }
+    }
+
+    .bigInfo {
+        img {
+            // width: 70%;
+            width: 450px;
+        }
+
+        .row > div {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        &-img {
+            &-left {
+                img {
+                    float: left;
+                }
+            }
+    
+            &-right {
+                img {
+                    float: right;
+                }
+            }
+
+            @media screen and (max-width: $lg) {
+                &-left, &-right {
+                    img {
+                        width: 80%;
+                        margin: 40px auto 0 auto;
+                    }
+                }
+
+                &-left {
+                    img {
+                        float: none;
+                    }
+                }
+
+                &-right {
+                    img {
+                        float: none;
+                    }
+                }
+            }
+        }
+    }
+
+    // ##### Packages ######
+    .packages-header {
+        &-search {
+            select {
+                float: right;
+                margin: 0 5px;
+            }
+        }
+    }
+
+    .packages {
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .package {
+            position: relative;
+            border: 1px solid lighten($secondary, 60);
+            border-radius: 25px;
+            box-shadow: 1px 4px 4px 1px rgba(0, 0, 0, 0.25);
+            margin-bottom: 25px;
+
+            &-img, &-content {
+                padding: 10px;
+            }
+
+            &-img {
+                display: flex;
+                justify-content: center;
+
+                img {
+                    width: 65%;
+                }
+            }
+
+            &-content {
+                &-date, &-type {
+                    font-size: 0.8rem;
+                    color: lighten($secondary, 30);
+                }
+
+                &-price {
+                    margin-top: 0.3rem;
+                    margin-bottom: 0.5rem;
+                    font-size: 1.2rem;
+                }
+
+                h5 {
+                    margin-bottom: 0;
+                }
+            }
+
+            &.eighteen-plus {
+                &::before {
+                    content: "";
+                    display: block;
+                    background-repeat: no-repeat;
+                    background-image: url('../../img/illustrations/eighteenPlus.svg');
+                    position: absolute;
+                    height: 35px;
+                    width: 35px;
+                    background-size: contain;
+                    float: right;
+                    right: 15px;
+                    top: 15px;
+                }
+            }
+        }
+
+        @media screen and (min-width: $lg) {
+            .row > div {
+                flex: 0 0 20%;
+            }
+        }
+    }
+
+    // ##### Login ######
+    .login {
+        border: 1px solid lighten($secondary, 60);
+        border-radius: 25px;
+        box-shadow: 1px 4px 4px 1px rgba(0, 0, 0, 0.25);
+        padding: 1rem 2rem;
+        margin: 200px 0;
+        
+        h1 {
+            text-align: center;
+        }
+
+        &-form {
+            input {
+                width: 100%;
+                border-radius: 5px;
+                border: 1px solid lighten($secondary, 30);;
+                padding: 2.5px 5px;
+                margin-bottom: 10px;
+
+                &:nth-of-type(2) {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+
+        @media screen and (max-width: $sm) {
+            margin-top: 0;
+            padding-bottom: 100%;
+        }
+    }
+
+    // ##### Package #####
+    .package-header {
+        &-item {
+            p {
+                width: 80%;
+
+                @media screen and (max-width: $md) {
+                   width: 100%;
+                }
+            }
+
+            img {
+                width: 60%;
+            }
+        }
+    }
+
+    .possible-products {
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .product {
+            position: relative;
+            border: 1px solid lighten($secondary, 60);
+            border-radius: 25px;
+            box-shadow: 1px 4px 4px 1px rgba(0, 0, 0, 0.25);
+            margin-bottom: 25px;
+
+            &-img, &-content {
+                padding: 10px;
+            }
+
+            &-img {
+                display: flex;
+                justify-content: center;
+
+                img {
+                    width: 65%;
+                }
+            }
+
+            h5 {
+                text-align: center;
+            }
+
+            &.eighteen-plus {
+                &::before {
+                    content: "";
+                    display: block;
+                    background-repeat: no-repeat;
+                    background-image: url('../../img/illustrations/eighteenPlus.svg');
+                    position: absolute;
+                    height: 35px;
+                    width: 35px;
+                    background-size: contain;
+                    float: right;
+                    right: 15px;
+                    top: 15px;
+                }
+            }
+        }
+    }
+
+    // ##### Canteen #####
+    .canteen {
+        &-container {
+            display: grid;
+            grid-template-columns: 175px auto;
+            background-color: $secondary;
+            border: 1px solid black;
+            border-radius: 30px;
+            margin-top: 100px;
+        }
+
+        &-nav {
+            border: 1px solid black;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+
+            &-logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+            }
+
+            &-item {
+                display: flex;
+                justify-content: center;
+                padding: 20px 0;
+                border-top: 1px solid black;
+                color: white;
+                text-decoration: none;
+
+                p {
+                    color: white;
+                    margin-bottom: 0;
+                }
+
+                &:hover {
+                    cursor: pointer;
+
+                    p {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+
+        &-content {
+            color: white;
+
+            &-top {
+                display: flex;
+                align-items: center;
+                position: relative;
+                height: 102px;
+                border-bottom: 1px solid black;
+            }
+
+            h1 {
+                padding-left: 20px;
+            }
+
+            &-options {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+
+            &-form-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            &-form {
+                width: 60%;
+                input {
+                    width: 100%;
+                    border-radius: 5px;
+                    border: 1px solid lighten($secondary, 30);;
+                    padding: 2.5px 5px;
+                    margin-bottom: 10px;
+                }
+
+                select {
+                    margin-bottom: 10px;
+                }
+            }
+
+            &-table {
+                table {
+                    width: 100%;
+                    text-align: center;
+
+                    tr {
+                        border-bottom: 0.5px solid black;
+                    }
+
+                    th, td {
+                        padding: 3.9px 0;
+                    }
+
+                    a {
+                        text-decoration: underline !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+footer {
+    color: white;
+    background-color: $secondary;
+
+    .footer {
+        &-container {
+            display: grid;
+            grid-template-columns: 400px auto;
+        }
+
+        &-img {
+            img {
+                width: 100%;
+            }
+        }
+
+        &-content {
+            display: grid;
+            grid-template-columns: 150px 150px auto;
+            padding: 20px 20px 20px 50px;
+            
+
+            ul {
+                padding-left: 0;
+                list-style-type: none;
+            }
+
+            &-pakketten {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: $md) {
+            &-container {
+                grid-template-columns: 100%;
+            }
+
+            &-content {
+                grid-template-columns: 25% 25% 50%;
+            }
+
+            &-img {
+                img {
+                    object-fit: none;
+                    height: 180px;
+                }
+            }
+        }
+
+        @media screen and (max-width: $xs) {
+            &-content {
+                grid-template-columns: 100%;
+                text-align: center;
+                padding: 20px;
+            }
+
+            &-img {
+                img {
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}

@@ -159,7 +159,11 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Students",
                 columns: new[] { "Id", "Birthday", "Email", "FirstName", "LastName", "PhoneNumber", "StudentNumber", "StudyCity" },
-                values: new object[] { 1, new DateTime(2001, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mark@gmail.com", "Mark", "De Groot", "+31612345678", 2184500, 0 });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2001, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mark@gmail.com", "Mark", "De Groot", "+31612345678", 2184500, 0 },
+                    { 2, new DateTime(2007, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Robin@gmail.com", "Robin", "De Vlucht", "+31613579246", 2184785, 1 }
+                });
 
             migrationBuilder.InsertData(
                 table: "CanteenEmployees",
@@ -176,8 +180,8 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified), 1, 1, "Lekker gezond pakket met fruit aan te raden voor elke student", false, "Gezond pakket", new DateTime(2022, 11, 16, 13, 15, 0, 0, DateTimeKind.Unspecified), 4.50m, null },
-                    { 2, new DateTime(2022, 11, 18, 16, 15, 0, 0, DateTimeKind.Unspecified), 2, 1, "Heerlijke broodjes als lunch of als tussendoortje", true, "Broodjes pakket", new DateTime(2022, 11, 18, 14, 15, 0, 0, DateTimeKind.Unspecified), 6.50m, null },
-                    { 3, new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified), 1, 2, "Verschillende soorten soep in een compact pakket", false, "Soep pakket", new DateTime(2022, 11, 16, 15, 15, 0, 0, DateTimeKind.Unspecified), 7.50m, 1 }
+                    { 2, new DateTime(2022, 11, 18, 16, 15, 0, 0, DateTimeKind.Unspecified), 2, 1, "Heerlijke broodjes als lunch of als tussendoortje", false, "Broodjes pakket", new DateTime(2022, 11, 18, 14, 15, 0, 0, DateTimeKind.Unspecified), 6.50m, null },
+                    { 3, new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified), 1, 2, "Verschillende soorten drank en een broodje", true, "Drank pakket", new DateTime(2022, 11, 16, 15, 15, 0, 0, DateTimeKind.Unspecified), 7.50m, null }
                 });
 
             migrationBuilder.InsertData(
@@ -189,7 +193,8 @@ namespace Infrastructure.Migrations
                     { 1, 2 },
                     { 2, 3 },
                     { 2, 4 },
-                    { 2, 5 }
+                    { 3, 4 },
+                    { 3, 5 }
                 });
 
             migrationBuilder.CreateIndex(

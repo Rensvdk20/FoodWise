@@ -56,14 +56,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 //app.MapControllerRoute(
-//    name: "Responses",
-//    pattern: "/Package}/{id?}",
-//    defaults: new { controller = "Package", action = "Package" });
-
-app.MapControllerRoute(
-    name: "Package",
-    pattern: "Package{id}",
-    defaults: new { Controller = "Package", action = "Package" }
-);
+//    name: "Package",
+//    pattern: "Package{id}",
+//    defaults: new { Controller = "Package", action = "Package" }
+//);
 
 app.Run();

@@ -49,18 +49,29 @@ namespace Infrastructure.EF
             return _context.Packages.Include(s => s.ReservedByStudent).Where(p => p.ReservedByStudent.Email == email);
         }
 
-        public async Task<bool> ReservePackageById(int studentId, int packageId)
+        public async Task<string> ReservePackageById(Student student, int packageId)
         {
             Package package = _context.Packages.SingleOrDefault(p => p.Id == packageId);
+            int compareFor18Plus = DateTime.Compare(student.Birthday.AddYears(18), package.PickupTime);
             if (package.ReservedByStudentId == null)
             {
-                package.ReservedByStudentId = studentId;
-                _context.Update(package);
-                await _context.SaveChangesAsync();
-                return true;
+                if (package.EighteenPlus && compareFor18Plus > 0)
+                {
+                    return "not-18";
+                }
+
+                if (!GetPackagesFromLoggedInStudent(student.Email).Any(s => s.PickupTime.Date == package.PickupTime.Date))
+                {
+                    package.ReservedByStudentId = student.Id;
+                    _context.Update(package);
+                    await _context.SaveChangesAsync();
+                    return "success";
+                }
+
+                return "already-reservation";
             }
 
-            return false;
+            return "error-reserved";
         }
 
         public async Task AddPackage(Package newPackage)
@@ -79,14 +90,23 @@ namespace Infrastructure.EF
             }
         }
 
-        public async Task DeletePackageById(int id)
+        public async Task<string> DeletePackageById(int id)
         {
-            var result = _context.Packages.SingleOrDefault(package => package.Id == id);
-            if (result != null)
+            var package = _context.Packages.SingleOrDefault(package => package.Id == id);
+
+            if (package != null)
             {
-                _context.Packages.Remove(result);
-                await _context.SaveChangesAsync();
+                if (package.ReservedByStudentId == null)
+                {
+                    _context.Packages.Remove(package);
+                    await _context.SaveChangesAsync();
+                    return "success";
+                }
+
+                return "already-reserved";
             }
+
+            return "not-found";
         }
     }
 }

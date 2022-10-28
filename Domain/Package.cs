@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Domain
         public ICollection<Product> Products { get; set; }
         [Required]
         public int? CanteenId { get; set; }
-        public Canteen? Canteen { get; set; }
+        public Canteen Canteen { get; set; }
         [Required(ErrorMessage = "Kies een ophaal datum")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime PickupTime { get; set; }
@@ -35,6 +36,6 @@ namespace Domain
         [Required(ErrorMessage = "Kies een categorie")]
         public int Category { get; set; }
         public int? ReservedByStudentId { get; set; }
-        public Student? ReservedByStudent { get; set; }
+        public Student ReservedByStudent { get; set; }
     }
 }

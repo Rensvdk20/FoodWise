@@ -14,11 +14,11 @@ namespace DomainServices.Repos
         IQueryable<Package> GetAllUnreservedPackages();
         IQueryable<Package> GetAllPackagesBasic();
         IQueryable<Package> GetAllReservedPackages();
-        Task<bool> ReservePackageById(int studentId, int packageId);
+        Task<string> ReservePackageById(Student studentId, int packageId);
         IQueryable<Package> GetPackagesFromLoggedInStudent(string email);
 
         Task AddPackage(Package newPackage);
         Task EditPackage(Package editedPackage);
-        Task DeletePackageById(int id);
+        Task<string> DeletePackageById(int id);
     }
 }

@@ -170,7 +170,7 @@ namespace Infrastructure.Migrations
                             CanteenId = 2,
                             Category = 1,
                             Description = "Heerlijke broodjes als lunch of als tussendoortje",
-                            EighteenPlus = true,
+                            EighteenPlus = false,
                             Name = "Broodjes pakket",
                             PickupTime = new DateTime(2022, 11, 18, 14, 15, 0, 0, DateTimeKind.Unspecified),
                             Price = 6.50m
@@ -181,12 +181,11 @@ namespace Infrastructure.Migrations
                             AvailableTill = new DateTime(2022, 11, 16, 17, 15, 0, 0, DateTimeKind.Unspecified),
                             CanteenId = 1,
                             Category = 2,
-                            Description = "Verschillende soorten soep in een compact pakket",
-                            EighteenPlus = false,
-                            Name = "Soep pakket",
+                            Description = "Verschillende soorten drank en een broodje",
+                            EighteenPlus = true,
+                            Name = "Drank pakket",
                             PickupTime = new DateTime(2022, 11, 16, 15, 15, 0, 0, DateTimeKind.Unspecified),
-                            Price = 7.50m,
-                            ReservedByStudentId = 1
+                            Price = 7.50m
                         });
                 });
 
@@ -298,6 +297,17 @@ namespace Infrastructure.Migrations
                             PhoneNumber = "+31612345678",
                             StudentNumber = 2184500,
                             StudyCity = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Birthday = new DateTime(2007, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Robin@gmail.com",
+                            FirstName = "Robin",
+                            LastName = "De Vlucht",
+                            PhoneNumber = "+31613579246",
+                            StudentNumber = 2184785,
+                            StudyCity = 1
                         });
                 });
 
@@ -338,7 +348,12 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            PackageId = 2,
+                            PackageId = 3,
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            PackageId = 3,
                             ProductId = 5
                         });
                 });
