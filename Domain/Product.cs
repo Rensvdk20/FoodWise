@@ -16,6 +16,7 @@ namespace Domain
         public ICollection<Package> Packages { get; set; }
         [Required]
         public bool containsAlcohol { get; set; }
-        public byte[] Picture { get; set; }
+        [Required]
+        public string Picture { get; set; }
     }
 }
