@@ -31,7 +31,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     containsAlcohol = table.Column<bool>(type: "bit", nullable: false),
-                    Picture = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,11 +149,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Name", "Picture", "containsAlcohol" },
                 values: new object[,]
                 {
-                    { 1, "Appel", null, false },
-                    { 2, "Peer", null, false },
-                    { 3, "Broodje Frikandel", null, false },
-                    { 4, "Kaiserbroodje", null, false },
-                    { 5, "Hertog Jan", null, true }
+                    { 1, "Appel", "https://i.imgur.com/Dy86B5w.png", false },
+                    { 2, "Peer", "https://i.imgur.com/HLRqlU9.png", false },
+                    { 3, "Broodje Frikandel", "https://i.imgur.com/G6puzUN.png", false },
+                    { 4, "Kaiserbroodje", "https://i.imgur.com/rMdiQiP.png", false },
+                    { 5, "Hertog Jan", "https://i.imgur.com/InH4TUw.jpg", true }
                 });
 
             migrationBuilder.InsertData(

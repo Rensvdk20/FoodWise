@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FoodWiseDbContext))]
-    [Migration("20221028082057_Initial")]
+    [Migration("20221028091805_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -203,8 +203,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Picture")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("containsAlcohol")
                         .HasColumnType("bit");
@@ -218,30 +219,35 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             Name = "Appel",
+                            Picture = "https://i.imgur.com/Dy86B5w.png",
                             containsAlcohol = false
                         },
                         new
                         {
                             Id = 2,
                             Name = "Peer",
+                            Picture = "https://i.imgur.com/HLRqlU9.png",
                             containsAlcohol = false
                         },
                         new
                         {
                             Id = 3,
                             Name = "Broodje Frikandel",
+                            Picture = "https://i.imgur.com/G6puzUN.png",
                             containsAlcohol = false
                         },
                         new
                         {
                             Id = 4,
                             Name = "Kaiserbroodje",
+                            Picture = "https://i.imgur.com/rMdiQiP.png",
                             containsAlcohol = false
                         },
                         new
                         {
                             Id = 5,
                             Name = "Hertog Jan",
+                            Picture = "https://i.imgur.com/InH4TUw.jpg",
                             containsAlcohol = true
                         });
                 });
