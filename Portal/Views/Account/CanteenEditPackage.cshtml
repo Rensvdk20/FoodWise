@@ -1,0 +1,70 @@
+﻿@using Domain;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AddPackageViewModel;
+
+@{
+    Layout = "_LayoutCanteen";
+
+    ViewData["Title"] = "Pakket aanpassen";
+
+    Package currentPackage = ViewBag.Package;
+    int countCategory = 0;
+}
+
+<div class="canteen-content-top">
+    <h1>Pakket aanpassen</h1>
+</div>
+<div>
+    <div class="canteen-content-form-container">
+        <div class="canteen-content-form">
+            <div class="text-success">@ViewBag.Message</div>
+            <form asp-action="CanteenEditPackage" asp-controller="Account" method="post">
+                <input asp-for="Id" type="hidden" value="@currentPackage.Id"/>
+
+                <label asp-for="Name">Naam</label>
+                <div><span asp-validation-for="Name" class="text-danger"></span></div>
+                <input asp-for="Name" value="@ViewBag.Package.Name" class="form-control"/>
+
+                <label asp-for="Description">Beschrijving</label>
+                <div><span asp-validation-for="Description" class="text-danger"></span></div>
+                <input asp-for="Description" value="@ViewBag.Package.Description" class="form-control"/>
+
+                <label asp-for="SelectedProducts">Products</label><br/>
+                <select asp-for="SelectedProducts" name="SelectedProducts" multiple="multiple">
+                    @foreach (var product in ViewBag.Products)
+                    {
+                        <!option @(currentPackage.Products.ToList().SingleOrDefault(p => p.Id == @product.Id) != null ? "selected" : "") value="@product.Id">@product.Name</!option>
+                    }
+                </select>
+                <br/>
+
+                <input asp-for="CanteenId" type="hidden" value="@currentPackage.Canteen.Id"/>
+
+                <label asp-for="PickupTime">Ophaal moment</label>
+                <div><span asp-validation-for="PickupTime" class="text-danger"></span></div>
+                <input id="pickupTime" value="@currentPackage.PickupTime.ToString("yyyy-MM-dd'T'HH:mm:ss")" type="datetime-local" asp-for="PickupTime" class="form-control" />
+
+                <label asp-for="AvailableTill">Beschikbaar tot</label>
+                <div><span asp-validation-for="AvailableTill" class="text-danger"></span></div>
+                <input asp-for="AvailableTill" value="@currentPackage.AvailableTill.ToString("yyyy-MM-dd'T'HH:mm:ss")" type="datetime-local" class="form-control" />
+
+                <label asp-for="Price">Prijs</label>
+                <div><span asp-validation-for="Price" class="text-danger"></span></div>
+                <input type="decimal" value="@Math.Round(@currentPackage.Price, 2)" asp-for="Price" class="form-control"/>
+
+                <label asp-for="Category">Categorie</label><br/>
+                <select asp-for="Category">
+                    @foreach (var cat in Enum.GetValues(typeof(Category)))
+                    {
+                        <!option value=@countCategory @(currentPackage.Category == countCategory ? "selected" : "")>@cat.ToString()</!option>
+                        countCategory++;
+                    }
+                </select>
+
+                <div class="text-danger" asp-validation-summary="All"></div>
+
+                <input type="submit" class="btn btn-primary" value="Pas aan">
+            </form>
+        </div>
+    </div>
+</div>

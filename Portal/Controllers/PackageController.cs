@@ -28,7 +28,7 @@ public class PackageController : Controller
 
     public IActionResult Index()
     {
-        IEnumerable<Package> packages = _packageRepo.GetAllPackages().ToList();
+        IEnumerable<Package> packages = _packageRepo.GetAllUnreservedPackages().ToList();
         return View("Packages", packages);
     }
 
@@ -36,7 +36,7 @@ public class PackageController : Controller
     // -1 is the filter "all"
     public PartialViewResult FilterPackages(int searchLocation = -1, int searchCategory = -1)
     {
-        IQueryable<Package> packages = _packageRepo.GetAllPackages();
+        IQueryable<Package> packages = _packageRepo.GetAllUnreservedPackages();
         if (searchLocation == -1 && searchCategory != -1)
         {
             return PartialView("_PackagesPartial", packages.Where(p => p.Category == searchCategory).ToList());
@@ -78,13 +78,24 @@ public class PackageController : Controller
         Student student = await getStudentInfo();
         string successMessage = null;
         string errorMessage = null;
-        if (await _packageRepo.ReservePackageById(student.Id, id))
+
+        switch (await _packageRepo.ReservePackageById(student, id))
         {
-            successMessage = "Pakket is succesvol gereserveerd";
-        }
-        else
-        {
-            errorMessage = "Dit pakket is al gereserveerd";
+            case "success":
+                successMessage = "Pakket is succesvol gereserveerd";
+                break;
+            case "error-reserved":
+                errorMessage = "Dit pakket is al gereserveerd";
+                break;
+            case "not-18":
+                errorMessage = "Je moet 18+ zijn om dit 18+ pakket te bestellen";
+                break;
+            case "already-reservation":
+                errorMessage = "You already have a package reservation on this day";
+                break;
+            default:
+                errorMessage = "Er is iets fout gegaan probeer het later opnieuw";
+                break;
         }
 
         return RedirectToAction("Package", "Package", new { id, successMessage, errorMessage });

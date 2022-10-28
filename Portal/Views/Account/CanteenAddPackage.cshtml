@@ -33,27 +33,19 @@
                 </select>
                 <br />
 
-                @*<label asp-for="CanteenId">Canteen</label><br/>
-                <select asp-for="CanteenId">
-                    @foreach (var canteen in ViewBag.Canteen)
-                    {
-                        <option value="@canteen.Id">@Enum.GetName(typeof(Location), canteen.Location)</option>
-                    }
-                </select>
-                <br/>*@
                 <input asp-for="CanteenId" type="hidden" value="@(ViewBag.CanteenEmployee.CanteenId)"/>
 
                 <label asp-for="PickupTime">Ophaal moment</label>
                 <div><span asp-validation-for="PickupTime" class="text-danger"></span></div>
-                <input id="pickupTime" type="datetime-local" asp-for="PickupTime" class="form-control"/>
+                <input id="pickupTime" type="datetime-local" asp-for="PickupTime" class="form-control" />
 
                 <label asp-for="AvailableTill">Beschikbaar tot</label>
                 <div><span asp-validation-for="AvailableTill" class="text-danger"></span></div>
-                <input asp-for="AvailableTill" class="form-control"/>
+                <input asp-for="AvailableTill" type="datetime-local" class="form-control" />
 
                 <label asp-for="Price">Prijs</label>
                 <div><span asp-validation-for="Price" class="text-danger"></span></div>
-                <input type="decimal" asp-for="Price" class="form-control"/>
+                <input type="decimal" value="0,00" asp-for="Price" class="form-control"/>
 
                 <label asp-for="Category">Categorie</label><br/>
                 <select asp-for="Category" asp-items="@(Html.GetEnumSelectList<Category>())">

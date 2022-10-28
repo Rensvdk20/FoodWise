@@ -44,13 +44,15 @@
                 <td>@package.AvailableTill</td>
                 <td>@Enum.GetName(typeof(City), @package.Canteen.City)</td>
                 <td>@Enum.GetName(typeof(Location), @package.Canteen.Location)</td>
-                <td><a>Edit</a></td>
-                <td><a>Remove</a></td>
+                <td><a asp-controller="Account" asp-action="CanteenEditPackage" asp-route-id="@package.Id">Edit</a></td>
+                <td><a asp-controller="Account" asp-action="DeletePackage" asp-route-id="@package.Id">Remove</a></td>
             </tr>
         }
 
         </tbody>
     </table>
+    <p class="text-success ps-2">@ViewBag.SuccessMessage</p>
+    <p class="text-danger ps-2">@ViewBag.ErrorMessage</p>
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">

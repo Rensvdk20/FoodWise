@@ -48,12 +48,18 @@
                     <li class="nav-item">
                         <a class="nav-link">Contact</a>
                     </li>*@
-                        @if (User.IsInRole("Student"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Package" asp-action="MyPackages">Mijn reserveringen</a>
-                            </li>
-                        }
+                    @if (User.IsInRole("CanteenEmployee"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="CanteenReservations">Kantine</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Student"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Package" asp-action="MyPackages">Mijn reserveringen</a>
+                        </li>
+                    }
                     <li class="nav-item">
                         @if(User.Identity.IsAuthenticated) {
                             <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
