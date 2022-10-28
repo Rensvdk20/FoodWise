@@ -18,6 +18,6 @@ namespace Domain
         public int EmployeeNumber { get; set; }
         [Required]
         public int CanteenId { get; set; }
-        public Canteen? Canteen { get; set; }
+        public Canteen Canteen { get; set; }
     }
 }
