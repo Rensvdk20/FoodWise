@@ -30,7 +30,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    containsAlcohol = table.Column<bool>(type: "bit", nullable: false),
+                    ContainsAlcohol = table.Column<bool>(type: "bit", nullable: false),
                     Picture = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -146,14 +146,14 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Name", "Picture", "containsAlcohol" },
+                columns: new[] { "Id", "ContainsAlcohol", "Name", "Picture" },
                 values: new object[,]
                 {
-                    { 1, "Appel", "https://i.imgur.com/Dy86B5w.png", false },
-                    { 2, "Peer", "https://i.imgur.com/HLRqlU9.png", false },
-                    { 3, "Broodje Frikandel", "https://i.imgur.com/G6puzUN.png", false },
-                    { 4, "Kaiserbroodje", "https://i.imgur.com/rMdiQiP.png", false },
-                    { 5, "Hertog Jan", "https://i.imgur.com/InH4TUw.jpg", true }
+                    { 1, false, "Appel", "https://i.imgur.com/Dy86B5w.png" },
+                    { 2, false, "Peer", "https://i.imgur.com/HLRqlU9.png" },
+                    { 3, false, "Broodje Frikandel", "https://i.imgur.com/G6puzUN.png" },
+                    { 4, false, "Kaiserbroodje", "https://i.imgur.com/rMdiQiP.png" },
+                    { 5, true, "Hertog Jan", "https://i.imgur.com/InH4TUw.jpg" }
                 });
 
             migrationBuilder.InsertData(
