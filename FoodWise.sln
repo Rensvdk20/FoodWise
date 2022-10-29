@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainServices", "DomainSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{1E487FE1-5A01-40B7-BBDA-87135A8B7FD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{130F9736-E70C-42BF-8799-F5C1DAD9F1CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1E487FE1-5A01-40B7-BBDA-87135A8B7FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E487FE1-5A01-40B7-BBDA-87135A8B7FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E487FE1-5A01-40B7-BBDA-87135A8B7FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130F9736-E70C-42BF-8799-F5C1DAD9F1CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130F9736-E70C-42BF-8799-F5C1DAD9F1CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130F9736-E70C-42BF-8799-F5C1DAD9F1CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130F9736-E70C-42BF-8799-F5C1DAD9F1CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

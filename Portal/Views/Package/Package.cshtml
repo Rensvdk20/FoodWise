@@ -29,7 +29,7 @@
         @foreach (var product in package.Products)
         {
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="product @(product.containsAlcohol ? "eighteen-plus" : "")">
+                <div class="product @(product.ContainsAlcohol ? "eighteen-plus" : "")">
                     <div class="product-img">
                         <img src="@product.Picture">
                     </div>
