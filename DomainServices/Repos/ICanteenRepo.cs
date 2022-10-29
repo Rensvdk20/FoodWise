@@ -10,6 +10,5 @@ namespace DomainServices.Repos
     public interface ICanteenRepo
     {
         IQueryable<Canteen> GetAllCanteens();
-        Canteen GetCanteenById(int id);
     }
 }

@@ -9,8 +9,7 @@ namespace DomainServices.Repos
 {
     public interface IStudentRepo
     {
-        IQueryable<Student> GetAllStudents();
         Student GetStudentById(int id);
-        Student getStudentByEmail(string email);
+        Student GetStudentByEmail(string email);
     }
 }

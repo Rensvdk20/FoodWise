@@ -20,10 +20,5 @@ namespace Infrastructure.EF
         {
             return _context.Canteens;
         }
-
-        public Canteen GetCanteenById(int id)
-        {
-            return _context.Canteens.SingleOrDefault(canteen => canteen.Id == id)!;
-        }
     }
 }

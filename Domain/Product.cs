@@ -15,7 +15,7 @@ namespace Domain
         //public int PackageId { get; set; }
         public ICollection<Package> Packages { get; set; }
         [Required]
-        public bool containsAlcohol { get; set; }
+        public bool ContainsAlcohol { get; set; }
         [Required]
         public string Picture { get; set; }
     }

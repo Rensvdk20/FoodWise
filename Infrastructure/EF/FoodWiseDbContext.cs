@@ -73,21 +73,21 @@ namespace Infrastructure.EF
             {
                 Id = 1,
                 Name = "Appel",
-                containsAlcohol = false,
+                ContainsAlcohol = false,
                 Picture = "https://i.imgur.com/Dy86B5w.png"
             };
             Product product2 = new Product()
             {
                 Id = 2,
                 Name = "Peer",
-                containsAlcohol = false,
+                ContainsAlcohol = false,
                 Picture = "https://i.imgur.com/HLRqlU9.png"
             };
             Product product3 = new Product()
             {
                 Id = 3,
                 Name = "Broodje Frikandel",
-                containsAlcohol = false,
+                ContainsAlcohol = false,
                 Picture = "https://i.imgur.com/G6puzUN.png"
 
             };
@@ -95,7 +95,7 @@ namespace Infrastructure.EF
             {
                 Id = 4,
                 Name = "Kaiserbroodje",
-                containsAlcohol = false,
+                ContainsAlcohol = false,
                 Picture = "https://i.imgur.com/rMdiQiP.png"
 
             };
@@ -103,7 +103,7 @@ namespace Infrastructure.EF
             {
                 Id = 5,
                 Name = "Hertog Jan",
-                containsAlcohol = true,
+                ContainsAlcohol = true,
                 Picture = "https://i.imgur.com/InH4TUw.jpg"
             };
 

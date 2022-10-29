@@ -18,17 +18,12 @@ namespace Infrastructure.EF
             _context = context;
         }
 
-        public IQueryable<Student> GetAllStudents()
-        {
-            return _context.Students;
-        }
-
         public Student GetStudentById(int id)
         {
             return _context.Students.SingleOrDefault(student => student.Id == id);
         }
 
-        public Student getStudentByEmail(string email)
+        public Student GetStudentByEmail(string email)
         {
             return _context.Students.SingleOrDefault(s => s.Email == email);
         }
