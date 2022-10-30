@@ -13,23 +13,23 @@ namespace Domain
         [Required, MaxLength(254)]
         public string Email { get; set; }
         [Required]
-        public DateTime Birthday
-        {
-            get
-            {
-                return this.Birthday;
-            }
-            set
-            {
-                DateTime tempDate = value;
-                if ((DateTime.Now - tempDate.AddYears(16)).TotalDays < 0)
-                {
-                    throw new ArgumentException("Student must be 16 years or older");
-                }
+        public DateTime Birthday { get; set; }
+        //{
+        //    get
+        //    {
+        //        return this.Birthday;
+        //    }
+        //    set
+        //    {
+        //        DateTime tempDate = value;
+        //        if ((DateTime.Now - tempDate.AddYears(16)).TotalDays < 0)
+        //        {
+        //            throw new ArgumentException("Student must be 16 years or older");
+        //        }
 
-                this.Birthday = value;
-            }
-        }
+        //        this.Birthday = value;
+        //    }
+        //}
         [Required, MaxLength(12)]
         public int StudentNumber { get; set; }
         [Required]
