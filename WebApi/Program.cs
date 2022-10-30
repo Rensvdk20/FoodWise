@@ -1,7 +1,9 @@
 using System.Text.Json.Serialization;
 using DomainServices.Repos;
 using Infrastructure.EF;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApi.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,8 @@ builder.Services.AddDbContext<FoodWiseDbContext>(opts =>
     opts.UseSqlServer(builder.Configuration["ConnectionStrings:EFConnection"]);
 });
 
+builder.Services.AddGraphQLServer().RegisterDbContext<FoodWiseDbContext>().AddQueryType<PackageQuery>().AddProjections();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,5 +42,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGraphQL();
 
 app.Run();
