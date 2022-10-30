@@ -171,7 +171,7 @@ namespace Portal.Tests
 
             var result = await packageController.MyPackages() as ViewResult;
             var packagesInModel = result.Model as List<Package>;
-            Assert.Equal(1, packagesInModel.Count);
+            Assert.Single(packagesInModel);
         }
 
         //UseCase 2 - Canteen offer
@@ -288,7 +288,7 @@ namespace Portal.Tests
 
             var result = await accountController.CanteenPackages() as ViewResult;
             var packagesInModel = result.Model as List<Package>;
-            Assert.Equal(1, packagesInModel.Count);
+            Assert.Single(packagesInModel);
         }
 
         //UseCase 3 - Offer a package
