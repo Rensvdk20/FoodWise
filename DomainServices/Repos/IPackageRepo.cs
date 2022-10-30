@@ -18,7 +18,6 @@ namespace DomainServices.Repos
         IQueryable<Package> GetPackagesFromLoggedInStudent(string email);
 
         Task AddPackage(Package newPackage);
-        Task EditPackage(Package editedPackage);
         Task<string> DeletePackageById(int id);
     }
 }

@@ -80,16 +80,6 @@ namespace Infrastructure.EF
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditPackage(Package editedPackage)
-        {
-            var result = _context.Packages.SingleOrDefault(package => package.Id == editedPackage.Id);
-            if (result != null)
-            {
-                result = editedPackage;
-                await _context.SaveChangesAsync();
-            }
-        }
-
         public async Task<string> DeletePackageById(int id)
         {
             var package = _context.Packages.SingleOrDefault(package => package.Id == id);

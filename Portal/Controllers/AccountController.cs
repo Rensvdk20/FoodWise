@@ -6,9 +6,6 @@ using Portal.Models;
 using Microsoft.AspNetCore.Authorization;
 using DomainServices.Repos;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Portal.Controllers;
 
@@ -151,7 +148,7 @@ public class AccountController : Controller
             }
 
             bool eighteenPlus = false;
-            var eighteenPlusPackages = products.Where(p => p.containsAlcohol == true);
+            var eighteenPlusPackages = products.Where(p => p.ContainsAlcohol == true);
             if (eighteenPlusPackages.Count() > 0)
             {
                 eighteenPlus = true;
@@ -233,7 +230,7 @@ public class AccountController : Controller
             }
 
             bool eighteenPlus = false;
-            var eighteenPlusPackages = products.Where(p => p.containsAlcohol == true);
+            var eighteenPlusPackages = products.Where(p => p.ContainsAlcohol == true);
             if (eighteenPlusPackages.Count() > 0)
             {
                 eighteenPlus = true;
@@ -336,7 +333,7 @@ public class AccountController : Controller
     {
         var userid = _userManager.GetUserId(HttpContext.User);
         var user = await _userManager.FindByIdAsync(userid);
-        return _canteenEmployeeRepo.getCanteenEmployeeByEmail(user.Email);
+        return _canteenEmployeeRepo.GetCanteenEmployeeByEmail(user.Email);
     }
 }
 

@@ -197,6 +197,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("ContainsAlcohol")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -204,9 +207,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Picture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("containsAlcohol")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -216,37 +216,37 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            ContainsAlcohol = false,
                             Name = "Appel",
-                            Picture = "https://i.imgur.com/Dy86B5w.png",
-                            containsAlcohol = false
+                            Picture = "https://i.imgur.com/Dy86B5w.png"
                         },
                         new
                         {
                             Id = 2,
+                            ContainsAlcohol = false,
                             Name = "Peer",
-                            Picture = "https://i.imgur.com/HLRqlU9.png",
-                            containsAlcohol = false
+                            Picture = "https://i.imgur.com/HLRqlU9.png"
                         },
                         new
                         {
                             Id = 3,
+                            ContainsAlcohol = false,
                             Name = "Broodje Frikandel",
-                            Picture = "https://i.imgur.com/G6puzUN.png",
-                            containsAlcohol = false
+                            Picture = "https://i.imgur.com/G6puzUN.png"
                         },
                         new
                         {
                             Id = 4,
+                            ContainsAlcohol = false,
                             Name = "Kaiserbroodje",
-                            Picture = "https://i.imgur.com/rMdiQiP.png",
-                            containsAlcohol = false
+                            Picture = "https://i.imgur.com/rMdiQiP.png"
                         },
                         new
                         {
                             Id = 5,
+                            ContainsAlcohol = true,
                             Name = "Hertog Jan",
-                            Picture = "https://i.imgur.com/InH4TUw.jpg",
-                            containsAlcohol = true
+                            Picture = "https://i.imgur.com/InH4TUw.jpg"
                         });
                 });
 

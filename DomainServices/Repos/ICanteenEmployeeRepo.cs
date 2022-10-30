@@ -9,9 +9,6 @@ namespace DomainServices.Repos
 {
     public interface ICanteenEmployeeRepo
     {
-        IQueryable<CanteenEmployee> GetAllCanteenEmployees();
-        CanteenEmployee GetCanteenEmployeeById(int id);
-
-        CanteenEmployee getCanteenEmployeeByEmail(string email);
+        CanteenEmployee GetCanteenEmployeeByEmail(string email);
     }
 }

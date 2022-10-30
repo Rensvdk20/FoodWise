@@ -28,7 +28,5 @@ namespace Portal.Models
         public decimal Price { get; set; }
         [Required(ErrorMessage = "Kies een categorie")]
         public int Category { get; set; }
-        public int? ReservedByStudentId { get; set; }
-        public Student ReservedByStudent { get; set; }
     }
 }

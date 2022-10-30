@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Domain;
 using DomainServices.Repos;
-using Infrastructure.EF;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -91,7 +90,7 @@ public class PackageController : Controller
                 errorMessage = "Je moet 18+ zijn om dit 18+ pakket te bestellen";
                 break;
             case "already-reservation":
-                errorMessage = "You already have a package reservation on this day";
+                errorMessage = "Je hebt al een pakket gereserveerd op deze dag";
                 break;
             default:
                 errorMessage = "Er is iets fout gegaan probeer het later opnieuw";
@@ -106,6 +105,6 @@ public class PackageController : Controller
     {
         var userid = _userManager.GetUserId(HttpContext.User);
         var user = await _userManager.FindByIdAsync(userid);
-        return _studentRepo.getStudentByEmail(user.Email);
+        return _studentRepo.GetStudentByEmail(user.Email);
     }
 }
