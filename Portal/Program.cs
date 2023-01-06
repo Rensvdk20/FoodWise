@@ -1,4 +1,6 @@
 using DomainServices.Repos;
+using DomainServices.Services.Intf;
+using DomainServices.Services;
 using Infrastructure.EF;
 using Infrastructure.IF;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IPackageServices, PackageServices>();
+builder.Services.AddScoped<ICanteenServices, CanteenServices>();
 
 builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 builder.Services.AddScoped<IPackageRepo, PackageRepo>();

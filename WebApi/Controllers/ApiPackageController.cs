@@ -1,5 +1,6 @@
 using Domain;
 using DomainServices.Repos;
+using DomainServices.Services.Intf;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Model;
 
@@ -9,13 +10,17 @@ namespace WebApi.Controllers
     [ApiController]
     public class ApiPackageController : ControllerBase
     {
+        private readonly IPackageServices _packageServices;
+
         private readonly IPackageRepo _packageRepo;
         private readonly IStudentRepo _studentRepo;
 
         public ApiPackageController(
+            IPackageServices packageServices,
             IPackageRepo packageRepo,
             IStudentRepo studentRepo)
         {
+            _packageServices = packageServices;
             _packageRepo = packageRepo;
             _studentRepo = studentRepo;
         }
@@ -31,21 +36,23 @@ namespace WebApi.Controllers
         public async Task<PackageViewModel> AddNewReservation(int studentId, int packageId)
         {
             PackageViewModel result = new PackageViewModel();
-            Student student = _studentRepo.GetStudentById(studentId);
-            if (student == null)
-            {
-                result.Code = 400;
-                result.Message = "User does not exist";
-                result.Package = null;
-                return result;
-            }
 
-            switch (await _packageRepo.ReservePackageById(student, packageId))
+            switch (await _packageServices.ReservePackageById(studentId, packageId))
             {
                 case "success":
-                    result.Code = 404;
+                    result.Code = 200;
                     result.Message = "Pakket is succesvol gereserveerd";
-                    result.Package = _packageRepo.GetPackageById(packageId);
+                    result.Package = _packageRepo.GetPackageByIdWithProducts(packageId);
+                    return result;
+                case "user-not-found":
+                    result.Code = 404;
+                    result.Message = "Deze student bestaat niet";
+                    result.Package = null;
+                    return result;
+                case "package-not-found":
+                    result.Code = 404;
+                    result.Message = "Dit pakket bestaat niet";
+                    result.Package = null;
                     return result;
                 case "error-reserved":
                     result.Code = 400;
