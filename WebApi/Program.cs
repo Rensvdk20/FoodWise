@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using DomainServices.Repos;
+using DomainServices.Services.Intf;
+using DomainServices.Services;
 using Infrastructure.EF;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IPackageServices, PackageServices>();
+builder.Services.AddScoped<ICanteenServices, CanteenServices>();
 
 builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 builder.Services.AddScoped<IPackageRepo, PackageRepo>();

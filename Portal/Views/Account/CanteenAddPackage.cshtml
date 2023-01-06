@@ -15,6 +15,7 @@
     <div class="canteen-content-form-container">
         <div class="canteen-content-form">
             <div class="text-success">@ViewBag.Message</div>
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
             <form asp-action="CanteenAddPackage" asp-controller="Account" method="post">
                 <label asp-for="Name">Naam</label>
                 <div><span asp-validation-for="Name" class="text-danger"></span></div>

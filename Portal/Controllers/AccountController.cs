@@ -5,12 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Portal.Models;
 using Microsoft.AspNetCore.Authorization;
 using DomainServices.Repos;
+using DomainServices.Services.Intf;
 using Microsoft.EntityFrameworkCore;
 
 namespace Portal.Controllers;
 
 public class AccountController : Controller
 {
+    private readonly ICanteenServices _canteenServices;
+
     private readonly IPackageRepo _packageRepo;
     private readonly ICanteenEmployeeRepo _canteenEmployeeRepo;
     private readonly IProductRepo _productRepo;
@@ -20,6 +23,7 @@ public class AccountController : Controller
     private readonly SignInManager<IdentityUser> _signInManager;
 
     public AccountController(
+        ICanteenServices canteenServices,
         UserManager<IdentityUser> userManager,
         SignInManager<IdentityUser> signInManager,
         IPackageRepo packageRepo,
@@ -27,6 +31,7 @@ public class AccountController : Controller
         IProductRepo productRepo,
         ICanteenRepo canteenRepo)
     {
+        _canteenServices = canteenServices;
         _userManager = userManager;
         _signInManager = signInManager;
         _packageRepo = packageRepo;
@@ -65,43 +70,28 @@ public class AccountController : Controller
             ViewBag.ErrorMessage = errorMessage;
         }
 
-        CanteenEmployee canteenEmployee = await getCanteenEmployeeInfo();
+        CanteenEmployee canteenEmployee = await GetCanteenEmployeeInfo();
         ViewBag.CanteenEmployeeDefaultCity = canteenEmployee.Canteen.City;
         ViewBag.CanteenEmployeeDefaultLocation = canteenEmployee.Canteen.Location;
+        IEnumerable<Package> packages = _packageRepo.GetAllCanteenPackages(canteenEmployee);
 
-        return View(_packageRepo.GetAllPackagesBasic().Include(c => c.Canteen)
-            .Where(c => c.Canteen.Location == canteenEmployee.Canteen.Location)
-            .Where(c => c.Canteen.City == canteenEmployee.Canteen.City).OrderBy(a => a.AvailableTill).ToList());
+        return View(packages.ToList());
     }
 
     [Authorize(Roles = "CanteenEmployee")]
-    public PartialViewResult FilterCanteenPackages(int searchCity = -1, int searchLocation = -1)
+    public PartialViewResult FilterCanteenPackages(int searchCity, int searchLocation)
     {
-        IQueryable<Package> packages = _packageRepo.GetAllPackagesBasic().Include(c => c.Canteen).OrderBy(a => a.AvailableTill);
+        IEnumerable<Package> packages = _canteenServices.FilterCanteenPackages(searchCity, searchLocation);
 
-        //The value -1 searches for all
-        if (searchCity == -1 && searchLocation == -1)
-        {
-            return PartialView("_CanteenLocationPackagesPartial", packages.ToList());
-        }
-        else if (searchCity != -1 && searchLocation == -1)
-        {
-            return PartialView("_CanteenLocationPackagesPartial", packages.Where(l => l.Canteen.City == searchCity).ToList());
-        }
-        else if (searchCity == -1 && searchLocation != -1)
-        {
-            return PartialView("_CanteenLocationPackagesPartial", packages.Where(l => l.Canteen.Location == searchLocation).ToList());
-        }
-
-        return PartialView("_CanteenLocationPackagesPartial", packages.Where(l => l.Canteen.Location == searchLocation).Where(l => l.Canteen.City == searchCity).ToList());
+        return PartialView("_CanteenLocationPackagesPartial", packages.ToList());
     }
 
     [Authorize(Roles = "CanteenEmployee")]
     public async Task<IActionResult> CanteenEditPackage(int id)
     {
-        CanteenEmployee canteenEmployee = await getCanteenEmployeeInfo();
+        CanteenEmployee canteenEmployee = await GetCanteenEmployeeInfo();
         ViewBag.CanteenEmployee = canteenEmployee;
-        ViewBag.Package = _packageRepo.GetPackageById(id);
+        ViewBag.Package = _packageRepo.GetPackageByIdWithProducts(id);
         ViewBag.Products = _productRepo.GetAllProducts().ToList();
         ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
         return View();
@@ -141,55 +131,53 @@ public class AccountController : Controller
 
         if (ModelState.IsValid && errorCount == 0)
         {
-            var products = new List<Product>();
-            foreach (int productId in packageVM.SelectedProducts)
-            {
-                products.Add(_productRepo.GetProductById(productId));
-            }
-
-            bool eighteenPlus = false;
-            var eighteenPlusPackages = products.Where(p => p.ContainsAlcohol == true);
-            if (eighteenPlusPackages.Count() > 0)
-            {
-                eighteenPlus = true;
-            }
-
             Package package = new Package
             {
                 Name = packageVM.Name,
                 Description = packageVM.Description,
-                Products = products,
+                Products = null,
                 CanteenId = packageVM.CanteenId,
                 PickupTime = packageVM.PickupTime,
                 AvailableTill = packageVM.AvailableTill,
-                EighteenPlus = eighteenPlus,
+                EighteenPlus = false,
                 Price = packageVM.Price,
                 Category = packageVM.Category
             };
 
-            ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
+            Package deletePackage = _packageRepo.GetPackageById(packageVM.Id);
 
-            await _packageRepo.DeletePackageById(packageVM.Id);
-            await _packageRepo.AddPackage(package);
-        }
-        else
-        {
-            CanteenEmployee canteenEmployee = await getCanteenEmployeeInfo();
-            ViewBag.CanteenEmployee = canteenEmployee;
-            ViewBag.Package = _packageRepo.GetPackageById(packageVM.Id);
-            ViewBag.Products = _productRepo.GetAllProducts().ToList();
-            ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
-            return View();
+            string successMessage = null;
+            string errorMessage = null;
+            switch (await _canteenServices.EditPackageWithProducts(packageVM.Id, package, packageVM.SelectedProducts))
+            {
+                case "success":
+                    successMessage = "Pakket is succesvol aangepast";
+                    ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
+                    return RedirectToAction("CanteenPackages", "Account", new { successMessage });
+                case "already-reserved":
+                    errorMessage = "Dit pakket is momenteel gereserveerd";
+                    return RedirectToAction("CanteenPackages", "Account", new { successMessage, errorMessage });
+                case "not-found":
+                    errorMessage = "Het pakket is niet gevonden";
+                    return RedirectToAction("CanteenPackages", "Account", new { successMessage, errorMessage });
+                default:
+                    errorMessage = "Er is iets fout gegaan probeer het later opnieuw";
+                    return RedirectToAction("CanteenPackages", "Account", new { successMessage, errorMessage });
+            }
         }
 
-        string successMessage = "Pakket is succesvol aangepast";
-        return RedirectToAction("CanteenPackages", "Account", new { successMessage });
+        CanteenEmployee canteenEmployee = await GetCanteenEmployeeInfo();
+        ViewBag.CanteenEmployee = canteenEmployee;
+        ViewBag.Package = _packageRepo.GetPackageByIdWithProducts(packageVM.Id);
+        ViewBag.Products = _productRepo.GetAllProducts().ToList();
+        ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
+        return View();
     }
 
     [Authorize(Roles = "CanteenEmployee")]
     public async Task<IActionResult> CanteenAddPackage()
     {
-        CanteenEmployee canteenEmployee = await getCanteenEmployeeInfo();
+        CanteenEmployee canteenEmployee = await GetCanteenEmployeeInfo();
         ViewBag.CanteenEmployee = canteenEmployee;
         ViewBag.Products = _productRepo.GetAllProducts().ToList();
         ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
@@ -223,39 +211,30 @@ public class AccountController : Controller
 
         if (ModelState.IsValid && errorCount == 0)
         {
-            var products = new List<Product>();
-            foreach (int productId in packageVM.SelectedProducts)
-            {
-                products.Add(_productRepo.GetProductById(productId));
-            }
-
-            bool eighteenPlus = false;
-            var eighteenPlusPackages = products.Where(p => p.ContainsAlcohol == true);
-            if (eighteenPlusPackages.Count() > 0)
-            {
-                eighteenPlus = true;
-            }
-
             Package package = new Package
             {
                 Name = packageVM.Name,
                 Description = packageVM.Description,
-                Products = products,
+                Products = null,
                 CanteenId = packageVM.CanteenId,
                 PickupTime = packageVM.PickupTime,
                 AvailableTill = packageVM.AvailableTill,
-                EighteenPlus = eighteenPlus,
+                EighteenPlus = false,
                 Price = packageVM.Price,
                 Category = packageVM.Category
             };
 
-            ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
-
-            await _packageRepo.AddPackage(package);
-            ViewBag.Message = "Pakket is succesvol toegevoegd";
+            if (await _canteenServices.AddPackage(packageVM.Id, package, packageVM.SelectedProducts))
+            {
+                ViewBag.Message = "Het pakket is succesvol toegevoegd";
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Het pakket kon niet worden toegevoegd";
+            }
         }
 
-        CanteenEmployee canteenEmployee = await getCanteenEmployeeInfo();
+        CanteenEmployee canteenEmployee = await GetCanteenEmployeeInfo();
         ViewBag.CanteenEmployee = canteenEmployee;
         ViewBag.Products = _productRepo.GetAllProducts().ToList();
         ViewBag.Canteen = _canteenRepo.GetAllCanteens().ToList();
@@ -267,7 +246,7 @@ public class AccountController : Controller
     {
         string successMessage = null;
         string errorMessage = null;
-        switch (await _packageRepo.DeletePackageById(id))
+        switch (await _canteenServices.DeletePackageById(id))
         {
             case "success":
                 successMessage = "Het pakket is succesvol verwijderd";
@@ -329,11 +308,10 @@ public class AccountController : Controller
     }
 
     [Authorize(Roles = "CanteenEmployee")]
-    public async Task<CanteenEmployee> getCanteenEmployeeInfo()
+    public async Task<CanteenEmployee> GetCanteenEmployeeInfo()
     {
         var userid = _userManager.GetUserId(HttpContext.User);
         var user = await _userManager.FindByIdAsync(userid);
         return _canteenEmployeeRepo.GetCanteenEmployeeByEmail(user.Email);
     }
 }
-

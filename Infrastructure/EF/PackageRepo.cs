@@ -31,7 +31,12 @@ namespace Infrastructure.EF
 
         public Package GetPackageById(int id)
         {
-            return _context.Packages.Include(p => p.Products).SingleOrDefault(package => package.Id == id)!;
+            return _context.Packages.SingleOrDefault(package => package.Id == id);
+        }
+
+        public Package GetPackageByIdWithProducts(int id)
+        {
+            return _context.Packages.Include(p => p.Products).SingleOrDefault(package => package.Id == id);
         }
 
         public IQueryable<Package> GetAllUnreservedPackages()
@@ -49,54 +54,45 @@ namespace Infrastructure.EF
             return _context.Packages.Include(s => s.ReservedByStudent).Where(p => p.ReservedByStudent.Email == email);
         }
 
-        public async Task<string> ReservePackageById(Student student, int packageId)
+        public IQueryable<Package> GetAllCanteenPackages(CanteenEmployee canteenEmployee)
         {
-            Package package = _context.Packages.SingleOrDefault(p => p.Id == packageId);
-            int compareFor18Plus = DateTime.Compare(student.Birthday.AddYears(18), package.PickupTime);
-            if (package.ReservedByStudentId == null)
-            {
-                if (package.EighteenPlus && compareFor18Plus > 0)
-                {
-                    return "not-18";
-                }
-
-                if (!GetPackagesFromLoggedInStudent(student.Email).Any(s => s.PickupTime.Date == package.PickupTime.Date))
-                {
-                    package.ReservedByStudentId = student.Id;
-                    _context.Update(package);
-                    await _context.SaveChangesAsync();
-                    return "success";
-                }
-
-                return "already-reservation";
-            }
-
-            return "error-reserved";
+            return _context.Packages.Include(c => c.Canteen)
+                .Where(c => c.Canteen.Location == canteenEmployee.Canteen.Location)
+                .Where(c => c.Canteen.City == canteenEmployee.Canteen.City).OrderBy(a => a.AvailableTill);
         }
 
-        public async Task AddPackage(Package newPackage)
+        public async Task<bool> AddPackage(Package newPackage)
         {
             _context.Packages.Add(newPackage);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<string> DeletePackageById(int id)
-        {
-            var package = _context.Packages.SingleOrDefault(package => package.Id == id);
-
-            if (package != null)
+            if (await _context.SaveChangesAsync() > 0)
             {
-                if (package.ReservedByStudentId == null)
-                {
-                    _context.Packages.Remove(package);
-                    await _context.SaveChangesAsync();
-                    return "success";
-                }
-
-                return "already-reserved";
+                return true;
             }
 
-            return "not-found";
+            return false;
+        }
+
+        public async Task<bool> DeletePackageById(int packageId)
+        {
+            Package package = GetPackageById(packageId);
+            _context.Packages.Remove(package);
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> UpdatePackage(Package package)
+        {
+            _context.Update(package);
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

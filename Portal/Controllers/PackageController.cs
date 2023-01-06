@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Domain;
 using DomainServices.Repos;
+using DomainServices.Services.Intf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +11,20 @@ namespace Portal.Controllers;
 
 public class PackageController : Controller
 {
+    private readonly IPackageServices _packageServices;
+
     private readonly IPackageRepo _packageRepo;
     private readonly IStudentRepo _studentRepo;
 
     private readonly UserManager<IdentityUser> _userManager;
 
     public PackageController(
+        IPackageServices packageServices,
         UserManager<IdentityUser> userManager,
         IPackageRepo packageRepo,
         IStudentRepo studentRepo)
     {
+        _packageServices = packageServices;
         _userManager = userManager;
         _packageRepo = packageRepo;
         _studentRepo = studentRepo;
@@ -27,27 +32,15 @@ public class PackageController : Controller
 
     public IActionResult Index()
     {
-        IEnumerable<Package> packages = _packageRepo.GetAllUnreservedPackages().ToList();
+        IEnumerable<Package> packages = _packageRepo.GetAllUnreservedPackages().OrderBy(a => a.AvailableTill);
         return View("Packages", packages);
     }
 
-    //Filter the packages
     // -1 is the filter "all"
-    public PartialViewResult FilterPackages(int searchLocation = -1, int searchCategory = -1)
+    public PartialViewResult FilterPackages(int searchLocation, int searchCategory)
     {
-        IQueryable<Package> packages = _packageRepo.GetAllUnreservedPackages();
-        if (searchLocation == -1 && searchCategory != -1)
-        {
-            return PartialView("_PackagesPartial", packages.Where(p => p.Category == searchCategory).ToList());
-        } else if (searchLocation != -1 && searchCategory == -1)
-        {
-            return PartialView("_PackagesPartial", packages.Where(p => p.Canteen.Location == searchLocation).ToList());
-        } else if (searchLocation != -1 && searchCategory != -1)
-        {
-            return PartialView("_PackagesPartial", packages.Where(p => p.Category == searchCategory).Where(p => p.Canteen.Location == searchLocation).ToList());
-        }
-        
-        return PartialView("_PackagesPartial", packages.ToList());
+        IEnumerable<Package> packages = _packageServices.FilterPackages(searchLocation, searchCategory);
+        return PartialView("_PackagesPartial", packages);
     }
 
     public ViewResult Package(int id, string successMessage = null, string errorMessage = null)
@@ -55,11 +48,13 @@ public class PackageController : Controller
         if (successMessage != null)
         {
             ViewBag.SuccessMessage = successMessage;
-        } else if (errorMessage != null)
+        }
+        else if (errorMessage != null)
         {
             ViewBag.ErrorMessage = errorMessage;
         }
-        Package package = _packageRepo.GetPackageById(id);
+
+        Package package = _packageRepo.GetPackageByIdWithProducts(id);
         return View(package);
     }
 
@@ -78,10 +73,16 @@ public class PackageController : Controller
         string successMessage = null;
         string errorMessage = null;
 
-        switch (await _packageRepo.ReservePackageById(student, id))
+        switch (await _packageServices.ReservePackageById(student.Id, id))
         {
             case "success":
                 successMessage = "Pakket is succesvol gereserveerd";
+                break;
+            case "user-not-found":
+                errorMessage = "Deze student bestaat niet";
+                break;
+            case "package-not-found":
+                errorMessage = "Dit pakket bestaat niet";
                 break;
             case "error-reserved":
                 errorMessage = "Dit pakket is al gereserveerd";
