@@ -8,7 +8,7 @@ namespace Domain.Tests
     {
         //UC2_AC2 - Canteen employee can see packages from other canteens
         [Fact]
-        public async Task UC2_AC2_CanteenEmployee_Sees_Other_Canteens_Offers()
+        public Task UC2_AC2_CanteenEmployee_Sees_Other_Canteens_Offers()
         {
             var packageRepoMock = new Mock<IPackageRepo>();
             var productRepoMock = new Mock<IProductRepo>();
@@ -86,6 +86,7 @@ namespace Domain.Tests
             var comparePackages = packages.Where(p => p.Canteen.City == canteen2.City)
                 .Where(p => p.Canteen.Location == canteen2.Location).ToList();
             Assert.Equal(result, comparePackages);
+            return Task.CompletedTask;
         }
 
         //UC3_AC1 - Canteen employee can use crud on packages
@@ -206,7 +207,7 @@ namespace Domain.Tests
 
         //UC3_AC3 - Canteen employee has overview of packages at his/her location
         [Fact]
-        public async Task UC3_AC3_CanteenEmployee_Sees_Packages_At_Own_Location()
+        public Task UC3_AC3_CanteenEmployee_Sees_Packages_At_Own_Location()
         {
             var packageRepoMock = new Mock<IPackageRepo>();
             var productRepoMock = new Mock<IProductRepo>();
@@ -290,11 +291,13 @@ namespace Domain.Tests
 
             var result = canteenServices.FilterCanteenPackages(canteenEmployee.Canteen.City, canteenEmployee.Canteen.Location); 
             Assert.Single(result);
+
+            return Task.CompletedTask;
         }
 
         //UC4_AC1 - Product has alcohol indicator
         [Fact]
-        public async Task UC4_AC1_Product_Has_Alcohol_Indicator()
+        public Task UC4_AC1_Product_Has_Alcohol_Indicator()
         {
             var packageRepoMock = new Mock<IPackageRepo>();
             var productRepoMock = new Mock<IProductRepo>();
@@ -320,6 +323,7 @@ namespace Domain.Tests
 
             var result = canteenServices._productRepo.GetProductById(product.Id);
             Assert.Equal("ContainsAlcohol", result.GetType().GetProperty("ContainsAlcohol")?.Name);
+            return Task.CompletedTask;
         }
 
         //UC4_AC2 - A package gets a 18+ indicator based on the products inside the package
@@ -576,7 +580,7 @@ namespace Domain.Tests
 
         //UC6_AC1 - Package has products
         [Fact]
-        public async Task UC6_AC1_Package_Has_Products()
+        public Task UC6_AC1_Package_Has_Products()
         {
             var packageRepoMock = new Mock<IPackageRepo>();
             var studentRepoMock = new Mock<IStudentRepo>();
@@ -624,11 +628,12 @@ namespace Domain.Tests
 
             Assert.Contains(product, package.Products);
             Assert.Contains(product2, package.Products);
+            return Task.CompletedTask;
         }
 
         //UC8_AC1 - Student can filter on location & UC8_AC2 Student can filter on meal category
         [Fact]
-        public async Task UC8_AC1_2_Student_Can_Filter_Packages()
+        public Task UC8_AC1_2_Student_Can_Filter_Packages()
         {
             var packageRepoMock = new Mock<IPackageRepo>();
             var studentRepoMock = new Mock<IStudentRepo>();
@@ -707,6 +712,7 @@ namespace Domain.Tests
                 .Where(p => p.Category == (int)Category.Drank).ToList();
 
             Assert.Equal(result, comparePackages);
+            return Task.CompletedTask;
         }
     }
 }
